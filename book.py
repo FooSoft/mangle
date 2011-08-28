@@ -347,6 +347,8 @@ class MainWindowBook(QtGui.QMainWindow, Ui_MainWindowBook):
 
 
     def addImageFiles(self, filenames):
+        filenames.sort()
+
         filenamesListed = []
         for i in xrange(0, self.listWidgetFiles.count()):
             filenamesListed.append(self.listWidgetFiles.item(i).text())
