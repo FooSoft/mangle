@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 22
+/mangle/!svn/ver/58/ui
+END
+options_ui.py
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/mangle/!svn/ver/68/ui/options_ui.py
+END
+resources_rc.py
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/mangle/!svn/ver/1/ui/resources_rc.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/mangle/!svn/ver/1/ui/__init__.py
+END
+about_ui.py
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/mangle/!svn/ver/67/ui/about_ui.py
+END
+book_ui.py
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/mangle/!svn/ver/43/ui/book_ui.py
+END
