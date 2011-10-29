@@ -1,4 +1,4 @@
-# Copyright (C) 2010  Alex Yatskov
+# Copyright (C) 2011  Marek Kubica <marek@xivilization.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,15 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 import os.path
 
-from PyQt4 import QtGui, uic
+def get_resource_path():
+    return os.path.dirname(__file__)
 
-import resources
+def get_ui_path():
+    return os.path.join(get_resource_path(), 'ui')
 
-class DialogAbout(QtGui.QDialog):
-    def __init__(self, parent):
-        QtGui.QDialog.__init__(self, parent)
-        ui = uic.loadUi(os.path.join(resources.get_ui_path(), 'about.ui'), self)
-        self.label.setPixmap(QtGui.QPixmap(os.path.join(resources.get_image_path(), 'banner_about.png')))
+def get_image_path():
+    return os.path.join(get_resource_path(), 'images')

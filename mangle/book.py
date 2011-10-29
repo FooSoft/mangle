@@ -14,16 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-from PyQt4 import QtGui, QtCore, QtXml
+import os, os.path
+from PyQt4 import QtGui, QtCore, QtXml, uic
 
 import image
+from resources import get_ui_path, get_image_path
 from image import ImageFlags
 from about import DialogAbout
 from options import DialogOptions
 from convert import DialogConvert
-from ui.book_ui import Ui_MainWindowBook
-
 
 class Book:
     DefaultDevice = 'Kindle 3'
@@ -105,10 +104,19 @@ class Book:
                 self.images.append(item.attribute('filename'))
 
 
-class MainWindowBook(QtGui.QMainWindow, Ui_MainWindowBook):
+class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
-        self.setupUi(self)
+        ui = uic.loadUi(os.path.join(get_ui_path(), 'book.ui'), self)
+        self._setIcon(self.actionFileNew, 'file_new')
+        self._setIcon(self.actionFileOpen, 'file_open')
+        self._setIcon(self.actionFileSave, 'save_file')
+        self._setIcon(self.actionBookAddFiles, 'add_file')
+        self._setIcon(self.actionBookAddDirectory, 'add_directory')
+        self._setIcon(self.actionBookRemove, 'remove_files')
+        self._setIcon(self.actionBookShiftUp, 'shift_up')
+        self._setIcon(self.actionBookShiftDown, 'shift_down')
+        self._setIcon(self.actionBookExport, 'export_book')
         self.connect(self.actionFileNew, QtCore.SIGNAL('triggered()'), self.onFileNew)
         self.connect(self.actionFileOpen, QtCore.SIGNAL('triggered()'), self.onFileOpen)
         self.connect(self.actionFileSave, QtCore.SIGNAL('triggered()'), self.onFileSave)
@@ -129,6 +137,11 @@ class MainWindowBook(QtGui.QMainWindow, Ui_MainWindowBook):
         self.book = Book()
         if filename != None:
             self.loadBook(filename)
+
+
+    @staticmethod
+    def _setIcon(action, name):
+        action.setIcon(QtGui.QIcon(os.path.join(get_image_path(), '%s.png' % name)))
 
 
     def closeEvent(self, event):
