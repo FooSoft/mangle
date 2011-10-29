@@ -14,15 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
+import os, os.path
 from PyQt4 import QtGui, QtCore, QtXml, uic
 
 import image
+import resources
 from image import ImageFlags
 from about import DialogAbout
 from options import DialogOptions
 from convert import DialogConvert
-
 
 class Book:
     DefaultDevice = 'Kindle 3'
@@ -107,7 +107,7 @@ class Book:
 class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
-        ui = uic.loadUi('dev/ui/book.ui', self)
+        ui = uic.loadUi(os.path.join(resources.get_ui_path(), 'book.ui'), self)
         self.connect(self.actionFileNew, QtCore.SIGNAL('triggered()'), self.onFileNew)
         self.connect(self.actionFileOpen, QtCore.SIGNAL('triggered()'), self.onFileOpen)
         self.connect(self.actionFileSave, QtCore.SIGNAL('triggered()'), self.onFileSave)
