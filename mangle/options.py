@@ -14,17 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui, QtCore, uic
 
 from image import ImageFlags
-from ui.options_ui import Ui_DialogOptions
 
 
-class DialogOptions(QtGui.QDialog, Ui_DialogOptions):
+class DialogOptions(QtGui.QDialog):
     def __init__(self, parent, book):
         QtGui.QDialog.__init__(self, parent)
         self.book = book
-        self.setupUi(self)
+        ui = uic.loadUi('dev/ui/options.ui', self)
         self.connect(self, QtCore.SIGNAL('accepted()'), self.onAccept)
         self.moveOptionsToDialog()
 

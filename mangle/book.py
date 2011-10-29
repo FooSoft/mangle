@@ -15,14 +15,13 @@
 
 
 import os
-from PyQt4 import QtGui, QtCore, QtXml
+from PyQt4 import QtGui, QtCore, QtXml, uic
 
 import image
 from image import ImageFlags
 from about import DialogAbout
 from options import DialogOptions
 from convert import DialogConvert
-from ui.book_ui import Ui_MainWindowBook
 
 
 class Book:
@@ -105,10 +104,10 @@ class Book:
                 self.images.append(item.attribute('filename'))
 
 
-class MainWindowBook(QtGui.QMainWindow, Ui_MainWindowBook):
+class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
-        self.setupUi(self)
+        ui = uic.loadUi('dev/ui/book.ui', self)
         self.connect(self.actionFileNew, QtCore.SIGNAL('triggered()'), self.onFileNew)
         self.connect(self.actionFileOpen, QtCore.SIGNAL('triggered()'), self.onFileOpen)
         self.connect(self.actionFileSave, QtCore.SIGNAL('triggered()'), self.onFileSave)

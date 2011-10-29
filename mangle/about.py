@@ -14,12 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui
-
-from ui.about_ui import Ui_DialogAbout
+from PyQt4 import QtGui, uic
 
 
-class DialogAbout(QtGui.QDialog, Ui_DialogAbout):
+class DialogAbout(QtGui.QDialog):
     def __init__(self, parent):
         QtGui.QDialog.__init__(self, parent)
-        self.setupUi(self)
+        ui = uic.loadUi('dev/ui/about.ui', self)
