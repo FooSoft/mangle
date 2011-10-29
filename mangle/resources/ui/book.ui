@@ -33,7 +33,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -107,10 +107,6 @@
    <addaction name="actionBookExport"/>
   </widget>
   <action name="actionFileNew">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/file_new.png</normaloff>:/img/img/file_new.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -122,10 +118,6 @@
    </property>
   </action>
   <action name="actionFileOpen">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/file_open.png</normaloff>:/img/img/file_open.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Open...</string>
    </property>
@@ -137,10 +129,6 @@
    </property>
   </action>
   <action name="actionFileSave">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/save_file.png</normaloff>:/img/img/save_file.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -176,10 +164,6 @@
    </property>
   </action>
   <action name="actionBookRemove">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/remove_files.png</normaloff>:/img/img/remove_files.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Remove</string>
    </property>
@@ -191,10 +175,6 @@
    </property>
   </action>
   <action name="actionBookExport">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/export_book.png</normaloff>:/img/img/export_book.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Export...</string>
    </property>
@@ -222,10 +202,6 @@
    </property>
   </action>
   <action name="actionBookAddFiles">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/add_file.png</normaloff>:/img/img/add_file.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Files...</string>
    </property>
@@ -237,10 +213,6 @@
    </property>
   </action>
   <action name="actionBookAddDirectory">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/add_directory.png</normaloff>:/img/img/add_directory.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Directory...</string>
    </property>
@@ -252,10 +224,6 @@
    </property>
   </action>
   <action name="actionBookShiftUp">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/shift_up.png</normaloff>:/img/img/shift_up.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Up</string>
    </property>
@@ -267,10 +235,6 @@
    </property>
   </action>
   <action name="actionBookShiftDown">
-   <property name="icon">
-    <iconset resource="../res/resources.qrc">
-     <normaloff>:/img/img/shift_down.png</normaloff>:/img/img/shift_down.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Down</string>
    </property>

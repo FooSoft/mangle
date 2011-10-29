@@ -24,5 +24,4 @@ class DialogAbout(QtGui.QDialog):
     def __init__(self, parent):
         QtGui.QDialog.__init__(self, parent)
         ui = uic.loadUi(os.path.join(resources.get_ui_path(), 'about.ui'), self)
-        label = ui.findChild(QtGui.QLabel, 'label')
-        label.setPixmap(QtGui.QPixmap(os.path.join(resources.get_image_path(), 'banner_about.png')))
+        self.label.setPixmap(QtGui.QPixmap(os.path.join(resources.get_image_path(), 'banner_about.png')))
