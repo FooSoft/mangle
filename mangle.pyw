@@ -19,7 +19,7 @@
 import sys
 from PyQt4 import QtGui
 
-from book import MainWindowBook
+from mangle.book import MainWindowBook
 
 
 application = QtGui.QApplication(sys.argv)
