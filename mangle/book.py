@@ -14,10 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-from os.path import join as pjoin
+import os, os.path
 from PyQt4 import QtGui, QtCore, QtXml, uic
-from PyQt4.QtGui import QIcon
 
 import image
 from resources import get_ui_path, get_image_path
@@ -110,15 +108,15 @@ class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
         ui = uic.loadUi(os.path.join(get_ui_path(), 'book.ui'), self)
-        self.actionFileNew.setIcon(QIcon(pjoin(get_image_path(), 'file_new.png')))
-        self.actionFileOpen.setIcon(QIcon(pjoin(get_image_path(), 'file_open.png')))
-        self.actionFileSave.setIcon(QIcon(pjoin(get_image_path(), 'save_file.png')))
-        self.actionBookAddFiles.setIcon(QIcon(pjoin(get_image_path(), 'add_file.png')))
-        self.actionBookAddDirectory.setIcon(QIcon(pjoin(get_image_path(), 'add_directory.png')))
-        self.actionBookRemove.setIcon(QIcon(pjoin(get_image_path(), 'remove_files.png')))
-        self.actionBookShiftUp.setIcon(QIcon(pjoin(get_image_path(), 'shift_up.png')))
-        self.actionBookShiftDown.setIcon(QIcon(pjoin(get_image_path(), 'shift_down.png')))
-        self.actionBookExport.setIcon(QIcon(pjoin(get_image_path(), 'export_book.png')))
+        self._setIcon(self.actionFileNew, 'file_new')
+        self._setIcon(self.actionFileOpen, 'file_open')
+        self._setIcon(self.actionFileSave, 'save_file')
+        self._setIcon(self.actionBookAddFiles, 'add_file')
+        self._setIcon(self.actionBookAddDirectory, 'add_directory')
+        self._setIcon(self.actionBookRemove, 'remove_files')
+        self._setIcon(self.actionBookShiftUp, 'shift_up')
+        self._setIcon(self.actionBookShiftDown, 'shift_down')
+        self._setIcon(self.actionBookExport, 'export_book')
         self.connect(self.actionFileNew, QtCore.SIGNAL('triggered()'), self.onFileNew)
         self.connect(self.actionFileOpen, QtCore.SIGNAL('triggered()'), self.onFileOpen)
         self.connect(self.actionFileSave, QtCore.SIGNAL('triggered()'), self.onFileSave)
@@ -139,6 +137,11 @@ class MainWindowBook(QtGui.QMainWindow):
         self.book = Book()
         if filename != None:
             self.loadBook(filename)
+
+
+    @staticmethod
+    def _setIcon(action, name):
+        action.setIcon(QtGui.QIcon(os.path.join(get_image_path(), '%s.png' % name)))
 
 
     def closeEvent(self, event):
