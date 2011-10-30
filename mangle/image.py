@@ -32,7 +32,7 @@ class KindleData:
         0xff, 0xff, 0xff
     ]
 
-    Palette15 = [
+    Palette15a = [
         0x00, 0x00, 0x00,
         0x11, 0x11, 0x11,
         0x22, 0x22, 0x22,
@@ -50,12 +50,31 @@ class KindleData:
         0xff, 0xff, 0xff,
     ]
 
+    Palette15b = [
+        0x00, 0x00, 0x00,
+        0x11, 0x11, 0x11,
+        0x22, 0x22, 0x22,
+        0x33, 0x33, 0x33,
+        0x44, 0x44, 0x44,
+        0x55, 0x55, 0x55,
+        0x77, 0x77, 0x77,
+        0x88, 0x88, 0x88,
+        0x99, 0x99, 0x99,
+        0xaa, 0xaa, 0xaa,
+        0xbb, 0xbb, 0xbb,
+        0xcc, 0xcc, 0xcc,
+        0xdd, 0xdd, 0xdd,
+        0xee, 0xee, 0xee,
+        0xff, 0xff, 0xff,
+    ]
+
     Profiles = {
         'Kindle 1': ((600, 800), Palette4),
-        'Kindle 2': ((600, 800), Palette15),
-        'Kindle 3': ((600, 800), Palette15),
-        'Kindle DX': ((824, 1200), Palette15),
-        'Kindle DXG': ((824, 1200), Palette15)
+        'Kindle 2': ((600, 800), Palette15a),
+        'Kindle 3': ((600, 800), Palette15a),
+        'Kindle 4': ((600, 800), Palette15b),
+        'Kindle DX': ((824, 1200), Palette15a),
+        'Kindle DXG': ((824, 1200), Palette15a)
     }
 
 
