@@ -25,6 +25,8 @@ class DialogOptions(QtGui.QDialog):
     def __init__(self, parent, book):
         QtGui.QDialog.__init__(self, parent)
         self.book = book
+        self.formats = {'image+cbz' : 0, 'image' : 1, 'cbz' : 2}
+        self.reverse_formats = dict((v,k) for k, v in self.formats.iteritems())
         ui = uic.loadUi(os.path.join(resources.get_ui_path(), 'options.ui'), self)
         self.connect(self, QtCore.SIGNAL('accepted()'), self.onAccept)
         self.moveOptionsToDialog()
@@ -37,8 +39,7 @@ class DialogOptions(QtGui.QDialog):
     def moveOptionsToDialog(self):
         self.lineEditTitle.setText(self.book.title or 'Untitled')
         self.comboBoxDevice.setCurrentIndex(max(self.comboBoxDevice.findText(self.book.device), 0))
-        formats = {'image+cbz' : 0, 'image' : 1, 'cbz' : 2}
-        self.comboBoxFormat.setCurrentIndex(formats.get(self.book.outputFormat, formats['image+cbz']))
+        self.comboBoxFormat.setCurrentIndex(self.formats.get(self.book.outputFormat, self.formats['image+cbz']))
         self.checkboxOverwrite.setChecked(self.book.overwrite)
         self.checkboxOrient.setChecked(self.book.imageFlags & ImageFlags.Orient)
         self.checkboxResize.setChecked(self.book.imageFlags & ImageFlags.Resize)
@@ -49,6 +50,7 @@ class DialogOptions(QtGui.QDialog):
     def moveDialogToOptions(self):
         title = self.lineEditTitle.text()
         device = self.comboBoxDevice.itemText(self.comboBoxDevice.currentIndex())
+        outputFormat = self.reverse_formats[self.comboBoxFormat.currentIndex()]
         overwrite = self.checkboxOverwrite.isChecked()
 
         imageFlags = 0
@@ -65,7 +67,8 @@ class DialogOptions(QtGui.QDialog):
             self.book.title != title or
             self.book.device != device or
             self.book.overwrite != overwrite or
-            self.book.imageFlags != imageFlags
+            self.book.imageFlags != imageFlags or
+            self.book.outputFormat != outputFormat
         )
 
         if modified:
@@ -74,3 +77,4 @@ class DialogOptions(QtGui.QDialog):
             self.book.device = device
             self.book.overwrite = overwrite
             self.book.imageFlags = imageFlags
+            self.book.outputFormat = outputFormat

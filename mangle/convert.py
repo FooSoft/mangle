@@ -13,7 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, shutil
+
 from PyQt4 import QtGui, QtCore
 
 import image
@@ -23,7 +24,6 @@ import cbz
 class DialogConvert(QtGui.QProgressDialog):
     def __init__(self, parent, book, directory):
         QtGui.QProgressDialog.__init__(self)
-        #self.setAutoReset(False)
 
         self.book = book
         self.directory = directory
@@ -47,10 +47,15 @@ class DialogConvert(QtGui.QProgressDialog):
             self.timer.start(0)
 
 
-    def closeEvent(self, event):
-        print "closeEvent"
-        self.closing.emit()
-        event.accept()
+    def hideEvent(self, event):
+        """Called when the dialog finishes processing."""
+        # close the archive if we created a CBZ file
+        if self.archive is not None:
+            self.archive.close()
+        # remove image directory if the user didn't wish for images
+        if 'image' not in self.book.outputFormat:
+            path = os.path.join(unicode(self.directory), unicode(self.book.title))
+            shutil.rmtree(path)
 
     def onTimer(self):
         index = self.value()
