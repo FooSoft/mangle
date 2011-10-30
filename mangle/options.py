@@ -37,6 +37,8 @@ class DialogOptions(QtGui.QDialog):
     def moveOptionsToDialog(self):
         self.lineEditTitle.setText(self.book.title or 'Untitled')
         self.comboBoxDevice.setCurrentIndex(max(self.comboBoxDevice.findText(self.book.device), 0))
+        formats = {'image+cbz' : 0, 'image' : 1, 'cbz' : 2}
+        self.comboBoxFormat.setCurrentIndex(formats.get(self.book.outputFormat, formats['image+cbz']))
         self.checkboxOverwrite.setChecked(self.book.overwrite)
         self.checkboxOrient.setChecked(self.book.imageFlags & ImageFlags.Orient)
         self.checkboxResize.setChecked(self.book.imageFlags & ImageFlags.Resize)
