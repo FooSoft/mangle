@@ -13,22 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 import os.path
-
 from PyQt4 import QtGui, QtCore, uic
-
 from image import ImageFlags
-import resources
 
 
 class DialogOptions(QtGui.QDialog):
     def __init__(self, parent, book):
         QtGui.QDialog.__init__(self, parent)
+
+        uic.loadUi('mangle/resource/ui/options.ui', self)
+        self.accepted.connect(self.onAccept)
+
         self.book = book
-        self.formats = {'image+cbz' : 0, 'image' : 1, 'cbz' : 2}
-        self.reverse_formats = dict((v,k) for k, v in self.formats.iteritems())
-        ui = uic.loadUi(os.path.join(resources.get_ui_path(), 'options.ui'), self)
-        self.connect(self, QtCore.SIGNAL('accepted()'), self.onAccept)
         self.moveOptionsToDialog()
 
 
@@ -39,7 +37,7 @@ class DialogOptions(QtGui.QDialog):
     def moveOptionsToDialog(self):
         self.lineEditTitle.setText(self.book.title or 'Untitled')
         self.comboBoxDevice.setCurrentIndex(max(self.comboBoxDevice.findText(self.book.device), 0))
-        self.comboBoxFormat.setCurrentIndex(self.formats.get(self.book.outputFormat, self.formats['image+cbz']))
+        self.comboBoxFormat.setCurrentIndex(max(self.comboBoxFormat.findText(self.book.outputFormat), 0))
         self.checkboxOverwrite.setChecked(self.book.overwrite)
         self.checkboxOrient.setChecked(self.book.imageFlags & ImageFlags.Orient)
         self.checkboxResize.setChecked(self.book.imageFlags & ImageFlags.Resize)
@@ -49,8 +47,8 @@ class DialogOptions(QtGui.QDialog):
 
     def moveDialogToOptions(self):
         title = self.lineEditTitle.text()
-        device = self.comboBoxDevice.itemText(self.comboBoxDevice.currentIndex())
-        outputFormat = self.reverse_formats[self.comboBoxFormat.currentIndex()]
+        device = self.comboBoxDevice.currentText()
+        outputFormat = self.comboBoxFormat.currentText()
         overwrite = self.checkboxOverwrite.isChecked()
 
         imageFlags = 0

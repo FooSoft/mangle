@@ -14,21 +14,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os, os.path
+import os
+import os.path
 from PyQt4 import QtGui, QtCore, QtXml, uic
-
-import image
-from resources import get_ui_path, get_image_path
 from image import ImageFlags
 from about import DialogAbout
 from options import DialogOptions
 from convert import DialogConvert
 
+
 class Book(object):
-    DefaultDevice = 'Kindle 3'
+    DefaultDevice = 'Kindle 4'
+    DefaultOutputFormat = 'Images only'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
-    DefaultOutputFormat = 'image+cbz'
 
 
     def __init__(self):
@@ -111,41 +110,28 @@ class Book(object):
 class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
-        ui = uic.loadUi(os.path.join(get_ui_path(), 'book.ui'), self)
-        self._setIcon(self.actionFileNew, 'file_new')
-        self._setIcon(self.actionFileOpen, 'file_open')
-        self._setIcon(self.actionFileSave, 'save_file')
-        self._setIcon(self.actionBookAddFiles, 'add_file')
-        self._setIcon(self.actionBookAddDirectory, 'add_directory')
-        self._setIcon(self.actionBookRemove, 'remove_files')
-        self._setIcon(self.actionBookShiftUp, 'shift_up')
-        self._setIcon(self.actionBookShiftDown, 'shift_down')
-        self._setIcon(self.actionBookExport, 'export_book')
-        self.connect(self.actionFileNew, QtCore.SIGNAL('triggered()'), self.onFileNew)
-        self.connect(self.actionFileOpen, QtCore.SIGNAL('triggered()'), self.onFileOpen)
-        self.connect(self.actionFileSave, QtCore.SIGNAL('triggered()'), self.onFileSave)
-        self.connect(self.actionFileSaveAs, QtCore.SIGNAL('triggered()'), self.onFileSaveAs)
-        self.connect(self.actionBookOptions, QtCore.SIGNAL('triggered()'), self.onBookOptions)
-        self.connect(self.actionBookAddFiles, QtCore.SIGNAL('triggered()'), self.onBookAddFiles)
-        self.connect(self.actionBookAddDirectory, QtCore.SIGNAL('triggered()'), self.onBookAddDirectory)
-        self.connect(self.actionBookShiftUp, QtCore.SIGNAL('triggered()'), self.onBookShiftUp)
-        self.connect(self.actionBookShiftDown, QtCore.SIGNAL('triggered()'), self.onBookShiftDown)
-        self.connect(self.actionBookRemove, QtCore.SIGNAL('triggered()'), self.onBookRemove)
-        self.connect(self.actionBookExport, QtCore.SIGNAL('triggered()'), self.onBookExport)
-        self.connect(self.actionHelpAbout, QtCore.SIGNAL('triggered()'), self.onHelpAbout)
-        self.connect(self.actionHelpHomepage, QtCore.SIGNAL('triggered()'), self.onHelpHomepage)
-        self.connect(self.listWidgetFiles, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.onFilesContextMenu)
-        self.connect(self.listWidgetFiles, QtCore.SIGNAL('itemDoubleClicked (QListWidgetItem *)'), self.onFilesDoubleClick)
+
+        uic.loadUi('mangle/resource/ui/book.ui', self)
         self.listWidgetFiles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.actionFileNew.triggered.connect(self.onFileNew)
+        self.actionFileOpen.triggered.connect(self.onFileOpen)
+        self.actionFileSave.triggered.connect(self.onFileSave)
+        self.actionFileSaveAs.triggered.connect(self.onFileSaveAs)
+        self.actionBookOptions.triggered.connect(self.onBookOptions)
+        self.actionBookAddFiles.triggered.connect(self.onBookAddFiles)
+        self.actionBookAddDirectory.triggered.connect(self.onBookAddDirectory)
+        self.actionBookShiftUp.triggered.connect(self.onBookShiftUp)
+        self.actionBookShiftDown.triggered.connect(self.onBookShiftDown)
+        self.actionBookRemove.triggered.connect(self.onBookRemove)
+        self.actionBookExport.triggered.connect(self.onBookExport)
+        self.actionHelpAbout.triggered.connect(self.onHelpAbout)
+        self.actionHelpHomepage.triggered.connect(self.onHelpHomepage)
+        self.listWidgetFiles.customContextMenuRequested.connect(self.onFilesContextMenu)
+        self.listWidgetFiles.itemDoubleClicked.connect(self.onFilesDoubleClick)
 
         self.book = Book()
-        if filename != None:
+        if filename is not None:
             self.loadBook(filename)
-
-
-    @staticmethod
-    def _setIcon(action, name):
-        action.setIcon(QtGui.QIcon(os.path.join(get_image_path(), '%s.png' % name)))
 
 
     def closeEvent(self, event):
@@ -253,7 +239,7 @@ class MainWindowBook(QtGui.QMainWindow):
             QtGui.QMessageBox.warning(self, 'Mangle', 'This book has no images to export')
             return
 
-        if self.book.title == None:
+        if self.book.title is None:
             dialog = DialogOptions(self, self.book)
             if dialog.exec_() == QtGui.QDialog.Rejected:
                 return
@@ -293,12 +279,12 @@ class MainWindowBook(QtGui.QMainWindow):
 
 
     def saveBook(self, browse=False):
-        if self.book.title == None:
+        if self.book.title is None:
             QtGui.QMessageBox.warning(self, 'Mangle', 'You must specify a title for this book before saving')
             return False
 
         filename = self.book.filename
-        if filename == None or browse:
+        if filename is None or browse:
             filename = QtGui.QFileDialog.getSaveFileName(
                 parent=self,
                 caption='Select a book file to save as',

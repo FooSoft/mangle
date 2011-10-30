@@ -15,13 +15,10 @@
 
 
 import os.path
-
 from PyQt4 import QtGui, uic
 
-import resources
 
 class DialogAbout(QtGui.QDialog):
     def __init__(self, parent):
         QtGui.QDialog.__init__(self, parent)
-        ui = uic.loadUi(os.path.join(resources.get_ui_path(), 'about.ui'), self)
-        self.label.setPixmap(QtGui.QPixmap(os.path.join(resources.get_image_path(), 'banner_about.png')))
+        uic.loadUi('mangle/resource/ui/about.ui', self)

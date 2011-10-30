@@ -33,7 +33,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -107,6 +107,10 @@
    <addaction name="actionBookExport"/>
   </widget>
   <action name="actionFileNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/file_new.png</normaloff>../img/file_new.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -116,8 +120,15 @@
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionFileOpen">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/file_open.png</normaloff>../img/file_open.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Open...</string>
    </property>
@@ -127,8 +138,15 @@
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionFileSave">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/save_file.png</normaloff>../img/save_file.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -137,6 +155,9 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionFileSaveAs">
@@ -164,6 +185,10 @@
    </property>
   </action>
   <action name="actionBookRemove">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/remove_files.png</normaloff>../img/remove_files.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Remove</string>
    </property>
@@ -173,8 +198,15 @@
    <property name="shortcut">
     <string>Del</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionBookExport">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/export_book.png</normaloff>../img/export_book.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Export...</string>
    </property>
@@ -183,6 +215,9 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionHelpHomepage">
@@ -202,6 +237,10 @@
    </property>
   </action>
   <action name="actionBookAddFiles">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/add_file.png</normaloff>../img/add_file.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Files...</string>
    </property>
@@ -211,8 +250,15 @@
    <property name="shortcut">
     <string>Ctrl+F</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionBookAddDirectory">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/add_directory.png</normaloff>../img/add_directory.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Directory...</string>
    </property>
@@ -222,8 +268,15 @@
    <property name="shortcut">
     <string>Ctrl+D</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionBookShiftUp">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/shift_up.png</normaloff>../img/shift_up.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Up</string>
    </property>
@@ -233,8 +286,15 @@
    <property name="shortcut">
     <string>Ctrl+PgUp</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionBookShiftDown">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/shift_down.png</normaloff>../img/shift_down.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Down</string>
    </property>
@@ -244,11 +304,12 @@
    <property name="shortcut">
     <string>Ctrl+PgDown</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
  </widget>
- <resources>
-  <include location="../res/resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>actionFileExit</sender>
