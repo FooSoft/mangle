@@ -25,7 +25,7 @@ from convert import DialogConvert
 
 class Book(object):
     DefaultDevice = 'Kindle 4'
-    DefaultOutputFormat = 'Images only'
+    DefaultOutputFormat = 'Images & CBZ'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
 
