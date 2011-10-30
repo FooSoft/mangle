@@ -91,7 +91,7 @@ class Book(object):
         self.title = root.attribute('title', 'Untitled')
         self.overwrite = root.attribute('overwrite', 'true' if Book.DefaultOverwrite else 'false') == 'true'
         self.device = root.attribute('device', Book.DefaultDevice)
-        self.outputFormat = root.attribute('outputFormat', 'image+cbz')
+        self.outputFormat = root.attribute('outputFormat', Book.DefaultOutputFormat)
         self.imageFlags = int(root.attribute('imageFlags', str(Book.DefaultImageFlags)))
         self.filename = filename
         self.modified = False

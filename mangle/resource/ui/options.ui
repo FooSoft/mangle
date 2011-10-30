@@ -99,17 +99,17 @@
          <widget class="QComboBox" name="comboBoxFormat">
           <item>
            <property name="text">
+            <string>Images &amp; CBZ</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Images only</string>
            </property>
           </item>
           <item>
            <property name="text">
             <string>CBZ only</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Images &amp; CBZ</string>
            </property>
           </item>
          </widget>

@@ -13,10 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 import os, shutil
-
 from PyQt4 import QtGui, QtCore
-
 import image
 import cbz
 
@@ -26,7 +25,7 @@ class DialogConvert(QtGui.QProgressDialog):
         QtGui.QProgressDialog.__init__(self)
 
         self.book = book
-        self.directory = directory
+        self.bookPath = os.path.join(unicode(directory), unicode(self.book.title))
 
         self.timer = None
         self.setWindowTitle('Exporting book...')
@@ -34,46 +33,45 @@ class DialogConvert(QtGui.QProgressDialog):
         self.setValue(0)
 
         self.archive = None
-        if 'cbz' in self.book.outputFormat:
-            # TODO: switch to API 2, to get rid of the unicode conversions
-            self.archive = cbz.Archive(
-                    os.path.join(unicode(self.directory), unicode(self.book.title)))
+        if 'CBZ' in self.book.outputFormat:
+            self.archive = cbz.Archive(self.bookPath)
 
 
     def showEvent(self, event):
         if self.timer is None:
             self.timer = QtCore.QTimer()
-            self.connect(self.timer, QtCore.SIGNAL('timeout()'), self.onTimer)
+            self.timer.timeout.connect(self.onTimer)
             self.timer.start(0)
 
 
     def hideEvent(self, event):
         """Called when the dialog finishes processing."""
-        # close the archive if we created a CBZ file
+
+        # Close the archive if we created a CBZ file
         if self.archive is not None:
             self.archive.close()
-        # remove image directory if the user didn't wish for images
-        if 'image' not in self.book.outputFormat:
-            path = os.path.join(unicode(self.directory), unicode(self.book.title))
-            shutil.rmtree(path)
+
+        # Remove image directory if the user didn't wish for images
+        if 'Image' not in self.book.outputFormat:
+            shutil.rmtree(self.bookPath)
+
 
     def onTimer(self):
         index = self.value()
-        directory = os.path.join(unicode(self.directory), unicode(self.book.title))
-        target = os.path.join(directory, '%05d.png' % index)
+        target = os.path.join(self.bookPath, '%05d.png' % index)
         source = unicode(self.book.images[index])
 
         if index == 0:
             try:
-                if not os.path.isdir(directory):
-                    os.makedirs(directory)
+                if not os.path.isdir(self.bookPath):
+                    os.makedirs(self.bookPath)
             except OSError:
-                QtGui.QMessageBox.critical(self, 'Mangle', 'Cannot create directory %s' % directory)
+                QtGui.QMessageBox.critical(self, 'Mangle', 'Cannot create directory %s' % self.bookPath)
                 self.close()
                 return
 
             try:
-                base = os.path.join(directory, unicode(self.book.title))
+                base = os.path.join(self.bookPath, unicode(self.book.title))
 
                 mangaName = base + '.manga'
                 if self.book.overwrite or not os.path.isfile(mangaName):
@@ -89,7 +87,7 @@ class DialogConvert(QtGui.QProgressDialog):
                     mangaSave.close()
 
             except IOError:
-                QtGui.QMessageBox.critical(self, 'Mangle', 'Cannot write manga file(s) to directory %s' % directory)
+                QtGui.QMessageBox.critical(self, 'Mangle', 'Cannot write manga file(s) to directory %s' % self.bookPath)
                 self.close()
                 return False
 

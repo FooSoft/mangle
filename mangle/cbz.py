@@ -25,15 +25,19 @@ class Archive(object):
         outputPath = os.path.join(outputDirectory, outputFileName)
         self.zipfile = ZipFile(outputPath, 'w', ZIP_STORED)
 
+
     def addFile(self, filename):
         arcname = os.path.basename(filename)
         self.zipfile.write(filename, arcname)
 
+
     def __enter__(self):
         return self
 
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
+
 
     def close(self):
         self.zipfile.close()
