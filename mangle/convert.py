@@ -13,10 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, shutil
+
 from PyQt4 import QtGui, QtCore
 
 import image
+import cbz
 
 
 class DialogConvert(QtGui.QProgressDialog):
@@ -31,13 +33,29 @@ class DialogConvert(QtGui.QProgressDialog):
         self.setMaximum(len(self.book.images))
         self.setValue(0)
 
+        self.archive = None
+        if 'cbz' in self.book.outputFormat:
+            # TODO: switch to API 2, to get rid of the unicode conversions
+            self.archive = cbz.Archive(
+                    os.path.join(unicode(self.directory), unicode(self.book.title)))
+
 
     def showEvent(self, event):
-        if self.timer == None:
+        if self.timer is None:
             self.timer = QtCore.QTimer()
             self.connect(self.timer, QtCore.SIGNAL('timeout()'), self.onTimer)
             self.timer.start(0)
 
+
+    def hideEvent(self, event):
+        """Called when the dialog finishes processing."""
+        # close the archive if we created a CBZ file
+        if self.archive is not None:
+            self.archive.close()
+        # remove image directory if the user didn't wish for images
+        if 'image' not in self.book.outputFormat:
+            path = os.path.join(unicode(self.directory), unicode(self.book.title))
+            shutil.rmtree(path)
 
     def onTimer(self):
         index = self.value()
@@ -80,6 +98,8 @@ class DialogConvert(QtGui.QProgressDialog):
         try:
             if self.book.overwrite or not os.path.isfile(target):
                 image.convertImage(source, target, str(self.book.device), self.book.imageFlags)
+                if self.archive is not None:
+                    self.archive.addFile(target)
         except RuntimeError, error:
             result = QtGui.QMessageBox.critical(
                 self,
