@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>350</width>
-    <height>350</height>
+    <height>363</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,6 +44,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <layout class="QFormLayout" name="formLayout_2">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
@@ -76,6 +79,32 @@
           <item>
            <property name="text">
             <string>Kindle DXG</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="labelFormat">
+          <property name="text">
+           <string>Format</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="comboBoxFormat">
+          <item>
+           <property name="text">
+            <string>Images &amp; CBZ</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Images only</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>CBZ only</string>
            </property>
           </item>
          </widget>

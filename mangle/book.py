@@ -24,10 +24,11 @@ from about import DialogAbout
 from options import DialogOptions
 from convert import DialogConvert
 
-class Book:
+class Book(object):
     DefaultDevice = 'Kindle 3'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
+    DefaultOutputFormat = 'image+cbz'
 
 
     def __init__(self):
@@ -38,6 +39,7 @@ class Book:
         self.device = Book.DefaultDevice
         self.overwrite = Book.DefaultOverwrite
         self.imageFlags = Book.DefaultImageFlags
+        self.outputFormat = Book.DefaultOutputFormat
 
 
     def save(self, filename):
@@ -50,6 +52,7 @@ class Book:
         root.setAttribute('overwrite', 'true' if self.overwrite else 'false')
         root.setAttribute('device', self.device)
         root.setAttribute('imageFlags', self.imageFlags)
+        root.setAttribute('outputFormat', self.outputFormat)
 
         for filenameImg in self.images:
             itemImg = document.createElement('image')
@@ -89,13 +92,14 @@ class Book:
         self.title = root.attribute('title', 'Untitled')
         self.overwrite = root.attribute('overwrite', 'true' if Book.DefaultOverwrite else 'false') == 'true'
         self.device = root.attribute('device', Book.DefaultDevice)
+        self.outputFormat = root.attribute('outputFormat', 'image+cbz')
         self.imageFlags = int(root.attribute('imageFlags', str(Book.DefaultImageFlags)))
         self.filename = filename
         self.modified = False
         self.images = []
 
         items = root.elementsByTagName('image')
-        if items == None:
+        if items is None:
             return
 
         for i in xrange(0, len(items)):
