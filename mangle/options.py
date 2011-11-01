@@ -15,6 +15,7 @@
 
 
 import os.path
+import util
 from PyQt4 import QtGui, QtCore, uic
 from image import ImageFlags
 
@@ -23,7 +24,7 @@ class DialogOptions(QtGui.QDialog):
     def __init__(self, parent, book):
         QtGui.QDialog.__init__(self, parent)
 
-        uic.loadUi('mangle/resource/ui/options.ui', self)
+        uic.loadUi(util.buildResPath('mangle/resource/ui/options.ui'), self)
         self.accepted.connect(self.onAccept)
 
         self.book = book

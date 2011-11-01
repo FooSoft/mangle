@@ -16,6 +16,7 @@
 
 import os
 import os.path
+import util
 from PyQt4 import QtGui, QtCore, QtXml, uic
 from image import ImageFlags
 from about import DialogAbout
@@ -111,7 +112,7 @@ class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
 
-        uic.loadUi('mangle/resource/ui/book.ui', self)
+        uic.loadUi(util.buildResPath('mangle/resource/ui/book.ui'), self)
         self.listWidgetFiles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.actionFileNew.triggered.connect(self.onFileNew)
         self.actionFileOpen.triggered.connect(self.onFileOpen)

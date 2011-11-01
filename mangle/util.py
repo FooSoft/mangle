@@ -14,12 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
 import os.path
-import util
-from PyQt4 import QtGui, uic
 
 
-class DialogAbout(QtGui.QDialog):
-    def __init__(self, parent):
-        QtGui.QDialog.__init__(self, parent)
-        uic.loadUi(util.buildResPath('mangle/resource/ui/about.ui'), self)
+def buildResPath(relative):
+    directory = os.path.split(sys.argv[0])[0]
+    return os.path.join(directory, relative)
