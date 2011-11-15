@@ -14,10 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
 import os.path
 
 
 def buildResPath(relative):
-    directory = os.path.split(sys.argv[0])[0]
+    directory = os.path.dirname(__file__)
     return os.path.join(directory, relative)
