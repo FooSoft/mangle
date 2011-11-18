@@ -112,7 +112,7 @@ class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
 
-        uic.loadUi(util.buildResPath('mangle/ui/book.ui'), self)
+        uic.loadUi(util.buildResPath('ui/book.ui'), self)
         self.listWidgetFiles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.actionFileNew.triggered.connect(self.onFileNew)
         self.actionFileOpen.triggered.connect(self.onFileOpen)

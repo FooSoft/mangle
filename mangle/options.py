@@ -24,7 +24,7 @@ class DialogOptions(QtGui.QDialog):
     def __init__(self, parent, book):
         QtGui.QDialog.__init__(self, parent)
 
-        uic.loadUi(util.buildResPath('mangle/ui/options.ui'), self)
+        uic.loadUi(util.buildResPath('ui/options.ui'), self)
         self.accepted.connect(self.onAccept)
 
         self.book = book
