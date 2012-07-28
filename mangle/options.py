@@ -42,6 +42,7 @@ class DialogOptions(QtGui.QDialog):
         self.checkboxOverwrite.setChecked(self.book.overwrite)
         self.checkboxOrient.setChecked(self.book.imageFlags & ImageFlags.Orient)
         self.checkboxResize.setChecked(self.book.imageFlags & ImageFlags.Resize)
+        self.checkboxStretch.setChecked(self.book.imageFlags & ImageFlags.Stretch)
         self.checkboxQuantize.setChecked(self.book.imageFlags & ImageFlags.Quantize)
         self.checkboxFrame.setChecked(self.book.imageFlags & ImageFlags.Frame)
 
@@ -57,10 +58,12 @@ class DialogOptions(QtGui.QDialog):
             imageFlags |= ImageFlags.Orient
         if self.checkboxResize.isChecked():
             imageFlags |= ImageFlags.Resize
+        if self.checkboxStretch.isChecked():
+			imageFlags |= ImageFlags.Stretch
         if self.checkboxQuantize.isChecked():
             imageFlags |= ImageFlags.Quantize
         if self.checkboxFrame.isChecked():
-            imageFlags |= ImageFlags.Frame
+			imageFlags |= ImageFlags.Frame
 
         modified = (
             self.book.title != title or

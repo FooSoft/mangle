@@ -16,8 +16,11 @@
 
 import os
 import os.path
+from os.path import basename
 import util
+import tempfile
 from PyQt4 import QtGui, QtCore, QtXml, uic
+from zipfile import ZipFile
 from image import ImageFlags
 from about import DialogAbout
 from options import DialogOptions
@@ -26,7 +29,7 @@ from convert import DialogConvert
 
 class Book(object):
     DefaultDevice = 'Kindle 4'
-    DefaultOutputFormat = 'Images & CBZ'
+    DefaultOutputFormat = 'PDF only'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
 
@@ -207,9 +210,12 @@ class MainWindowBook(QtGui.QMainWindow):
         filenames = QtGui.QFileDialog.getOpenFileNames(
             parent=self,
             caption='Select image file(s) to add',
-            filter='Image files (*.jpeg *.jpg *.gif *.png);;All files (*.*)'
+            filter='Image files (*.jpeg *.jpg *.gif *.png);;Comic files (*.cbz)'
         )
-        self.addImageFiles(filenames)
+        if(self.containsCbzFile(filenames)):
+            self.addCBZFiles(filenames)
+        else:
+            self.addImageFiles(filenames)
 
 
     def onBookAddDirectory(self):
@@ -364,7 +370,6 @@ class MainWindowBook(QtGui.QMainWindow):
                 self.book.images.append(filename)
                 self.book.modified = True
 
-
     def addImageDirs(self, directories):
         filenames = []
 
@@ -377,6 +382,33 @@ class MainWindowBook(QtGui.QMainWindow):
 
         self.addImageFiles(filenames)
 
+    def addCBZFiles(self, filenames):
+        directories = []
+        tempDir = tempfile.gettempdir()
+        filenames.sort()
+
+        filenamesListed = []
+        for i in xrange(0, self.listWidgetFiles.count()):
+            filenamesListed.append(self.listWidgetFiles.item(i).text())
+
+        for filename in filenames:
+            folderName = os.path.splitext(basename(str(filename)))[0]
+            path = tempDir + "/" + folderName + "/"
+            cbzFile = ZipFile(str(filename))
+            for f in cbzFile.namelist():
+                if f.endswith('/'):
+                    try:
+                        os.makedirs(path+f)
+                    except:
+                        pass #the dir exists so we are going to extract the images only.
+                else:
+                    cbzFile.extract(f, path)
+			#Add the directories
+            if os.path.isdir(unicode(path)):
+                directories.append(path)
+        #Add the files
+        self.addImageDirs(directories)
+		
 
     def isImageFile(self, filename):
         imageExts = ['.jpeg', '.jpg', '.gif', '.png']
@@ -386,6 +418,17 @@ class MainWindowBook(QtGui.QMainWindow):
             os.path.splitext(filename)[1].lower() in imageExts
         )
 
+    def containsCbzFile(self, filenames):
+        cbzExts = ['.cbz']
+        for filename in filenames:
+            filename = unicode(filename)
+            result = (
+            os.path.isfile(filename) and
+            os.path.splitext(filename)[1].lower() in cbzExts
+            )
+            if result == True:
+                return result
+        return False     
 
     def cleanupBookFile(self, filename):
         if len(os.path.splitext(unicode(filename))[1]) == 0:

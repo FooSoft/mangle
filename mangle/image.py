@@ -22,6 +22,7 @@ class ImageFlags:
     Resize = 1 << 1
     Frame = 1 << 2
     Quantize = 1 << 3
+    Stretch = 1 << 4
 
 
 class KindleData:
@@ -88,6 +89,10 @@ def quantizeImage(image, palette):
 
     return image.quantize(palette=palImg)
 
+
+def stretchImage(image, size):
+	widthDev, heightDev = size
+	return image.resize((widthDev, heightDev), Image.ANTIALIAS)
 
 def resizeImage(image, size):
     widthDev, heightDev = size
@@ -166,16 +171,17 @@ def convertImage(source, target, device, flags):
         image = Image.open(source)
     except IOError:
         raise RuntimeError('Cannot read image file %s' % source)
-
     image = formatImage(image)
     if flags & ImageFlags.Orient:
-        image = orientImage(image, size)
+		image = orientImage(image, size)
     if flags & ImageFlags.Resize:
-        image = resizeImage(image, size)
+		image = resizeImage(image, size)
+    if flags & ImageFlags.Stretch:
+		image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
-        image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
+		image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
     if flags & ImageFlags.Quantize:
-        image = quantizeImage(image, palette)
+		image = quantizeImage(image, palette)
 
     try:
         image.save(target)
