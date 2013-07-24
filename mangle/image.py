@@ -74,7 +74,9 @@ class KindleData:
         'Kindle 3': ((600, 800), Palette15a),
         'Kindle 4': ((600, 800), Palette15b),
         'Kindle DX': ((824, 1200), Palette15a),
-        'Kindle DXG': ((824, 1200), Palette15a)
+        'Kindle DXG': ((824, 1200), Palette15a),
+        'Kindle Touch': ((600, 800), Palette15a), 
+        'Kindle Paperwhite': ((758, 1024), Palette15b) # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
     }
 
 
