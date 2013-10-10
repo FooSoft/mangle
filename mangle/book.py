@@ -215,6 +215,7 @@ class MainWindowBook(QtGui.QMainWindow):
     def onBookAddDirectory(self):
         directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select an image directory to add')
         if not directory.isNull():
+            self.book.title = os.path.basename(os.path.normpath(unicode(directory)))
             self.addImageDirs([directory])
 
 
@@ -375,7 +376,7 @@ class MainWindowBook(QtGui.QMainWindow):
                 path = os.path.join(directory, item)
                 if self.isImageFile(path):
                     filenames.append(path)
-                elif os.path.isdir:
+                elif os.path.isdir(path):
                     self.addImageDirs([path])
                     
         self.addImageFiles(filenames)
