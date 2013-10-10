@@ -29,7 +29,7 @@ from natsort import natsorted
 
 
 class Book(object):
-    DefaultDevice = 'Kindle 4'
+    DefaultDevice = 'Kindle Paperwhite'
     DefaultOutputFormat = 'PDF only'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
@@ -40,6 +40,7 @@ class Book(object):
         self.filename = None
         self.modified = False
         self.title = None
+        self.titleSet = False
         self.device = Book.DefaultDevice
         self.overwrite = Book.DefaultOverwrite
         self.imageFlags = Book.DefaultImageFlags
@@ -116,7 +117,7 @@ class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
 
-        uic.loadUi(util.buildResPath('ui/book.ui'), self)
+        uic.loadUi(util.buildResPath('mangle/ui/book.ui'), self)
         self.listWidgetFiles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.actionFileNew.triggered.connect(self.onFileNew)
         self.actionFileOpen.triggered.connect(self.onFileOpen)
@@ -240,7 +241,8 @@ class MainWindowBook(QtGui.QMainWindow):
 
     def onBookOptions(self):
         dialog = DialogOptions(self, self.book)
-        dialog.exec_()
+        if dialog.exec_() == QtGui.QDialog.Accepted:
+            self.book.titleSet = True
 
 
     def onBookExport(self):
@@ -248,10 +250,12 @@ class MainWindowBook(QtGui.QMainWindow):
             QtGui.QMessageBox.warning(self, 'Mangle', 'This book has no images to export')
             return
 
-        if self.book.title is None:
+        if not self.book.titleSet: # if self.book.title is None:
             dialog = DialogOptions(self, self.book)
             if dialog.exec_() == QtGui.QDialog.Rejected:
                 return
+            else:
+                self.book.titleSet = True
 
         directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select a directory to export book to')
         if not directory.isNull():
@@ -261,7 +265,7 @@ class MainWindowBook(QtGui.QMainWindow):
 
     def onHelpHomepage(self):
         services = QtGui.QDesktopServices()
-        services.openUrl(QtCore.QUrl('http://foosoft.net/mangle'))
+        services.openUrl(QtCore.QUrl('https://github.com/catmanjan/mangle'))
 
 
     def onHelpAbout(self):

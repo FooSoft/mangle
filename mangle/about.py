@@ -22,4 +22,4 @@ from PyQt4 import QtGui, uic
 class DialogAbout(QtGui.QDialog):
     def __init__(self, parent):
         QtGui.QDialog.__init__(self, parent)
-        uic.loadUi(util.buildResPath('ui/about.ui'), self)
+        uic.loadUi(util.buildResPath('mangle/ui/about.ui'), self)
