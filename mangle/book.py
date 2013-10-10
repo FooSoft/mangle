@@ -24,15 +24,6 @@ from options import DialogOptions
 from convert import DialogConvert
 
 
-import re
-digits = re.compile(r'(\d+)')
-def tokenize(filename):
-    return tuple(int(token) if match else token
-        for token, match in
-        ((fragment, digits.search(fragment))
-        for fragment in digits.split(filename)))
-    
-
 class Book(object):
     DefaultDevice = 'Kindle 4'
     DefaultOutputFormat = 'Images & CBZ'
@@ -379,7 +370,7 @@ class MainWindowBook(QtGui.QMainWindow):
 
         for directory in directories:
             directory = unicode(directory)
-            for item in sorted(os.listdir(directory), key=tokenize):
+            for item in sorted(os.listdir(directory), key=util.tokenize):
                 item = unicode(item)
                 path = os.path.join(directory, item)
                 if self.isImageFile(path):
