@@ -21,11 +21,3 @@ import re
 def buildResPath(relative):
     directory = os.path.dirname(__file__)
     return os.path.join(directory, relative)
-
-
-digits = re.compile(r'(\d+)')
-def tokenize(filename):
-    return tuple(int(token) if match else token
-        for token, match in
-        ((fragment, digits.search(fragment))
-        for fragment in digits.split(filename)))

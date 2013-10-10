@@ -22,6 +22,7 @@ from image import ImageFlags
 from about import DialogAbout
 from options import DialogOptions
 from convert import DialogConvert
+from natsort import natsorted
 
 
 class Book(object):
@@ -352,13 +353,11 @@ class MainWindowBook(QtGui.QMainWindow):
 
 
     def addImageFiles(self, filenames):
-        filenames.sort()
-
         filenamesListed = []
         for i in xrange(0, self.listWidgetFiles.count()):
             filenamesListed.append(self.listWidgetFiles.item(i).text())
 
-        for filename in filenames:
+        for filename in natsorted(filenames):
             if filename not in filenamesListed:
                 filename = QtCore.QString(filename)
                 self.listWidgetFiles.addItem(filename)
@@ -370,15 +369,12 @@ class MainWindowBook(QtGui.QMainWindow):
         filenames = []
 
         for directory in directories:
-            directory = unicode(directory)
-            for item in sorted(os.listdir(directory), key=util.tokenize):
-                item = unicode(item)
-                path = os.path.join(directory, item)
-                if self.isImageFile(path):
-                    filenames.append(path)
-                elif os.path.isdir(path):
-                    self.addImageDirs([path])
-                    
+            for root, subdirs, subfiles in os.walk(unicode(directory)):
+                for filename in subfiles:
+                    path = os.path.join(root, filename)
+                    if self.isImageFile(path):
+                        filenames.append(path)
+
         self.addImageFiles(filenames)
 
 
