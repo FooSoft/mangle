@@ -2,7 +2,7 @@
 Mangle exports comics, manga and other image files into a format that all Kindles can read. Mangle can also resize your images to render faster on your Kindle.
 
 ## Downloads
-- [Mangle Version 3.0.0 (2013-10-11)](https://github.com/catmanjan/mangle/releases/tag/3)
+- [Mangle Version 3.0.0](https://github.com/catmanjan/mangle/releases/download/3/mangle_3.zip) (2013-10-11)
 
 ## For Developers
 - [Python 2.7](http://www.python.org/download/releases/2.7/)
