@@ -30,7 +30,7 @@ from natsort import natsorted
 
 class Book(object):
     DefaultDevice = 'Kindle Paperwhite'
-    DefaultOutputFormat = 'PDF only'
+    DefaultOutputFormat = 'CBZ only'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
 
