@@ -78,6 +78,11 @@
           </item>
           <item>
            <property name="text">
+            <string>Kindle 5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Kindle DX</string>
            </property>
           </item>
