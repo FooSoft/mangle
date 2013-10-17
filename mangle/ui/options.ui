@@ -162,7 +162,7 @@
       <item>
        <widget class="QCheckBox" name="checkboxSplit">
         <property name="text">
-         <string>Split left and right pages</string>
+         <string>Split images into two pages (right, left)</string>
         </property>
        </widget>
       </item>

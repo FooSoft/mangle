@@ -179,28 +179,36 @@ def frameImage(image, foreground, background, size):
     return imageBg
 
 
+def loadImage(source):
+    try:
+        return Image.open(source)
+    except IOError:
+        raise RuntimeError('Cannot read image file %s' % source)
+    
+
+def saveImage(image, target):
+    try:
+        image.save(target)
+    except IOError:
+        raise RuntimeError('Cannot write image file %s' % target)
+
+
 def convertImage(source, target, device, flags):
     try:
         size, palette = KindleData.Profiles[device]
     except KeyError:
         raise RuntimeError('Unexpected output device %s' % device)
-
-    try:
-        image = Image.open(source)
-    except IOError:
-        raise RuntimeError('Cannot read image file %s' % source)
+    # Load image from source path
+    image = loadImage(source)
+    # Format according to palette
     image = formatImage(image)
-    if flags & ImageFlags.Orient:
-        image = orientImage(image, size)
+    # Apply flag transforms
     if flags & ImageFlags.SplitRight:
         image = splitRight(image)
-    elif flags & ImageFlags.Split:
+    if flags & ImageFlags.Split:
         image = splitLeft(image)
-        # Recurse for right page
-        fileName, fileExtension = os.path.splitext(target)
-        newTarget = fileName + "r" + fileExtension
-        print(newTarget)
-        convertImage(source, newTarget, device, flags | ImageFlags.SplitRight)
+    if flags & ImageFlags.Orient:
+        image = orientImage(image, size)
     if flags & ImageFlags.Resize:
         image = resizeImage(image, size)
     if flags & ImageFlags.Stretch:
@@ -210,7 +218,4 @@ def convertImage(source, target, device, flags):
     if flags & ImageFlags.Quantize:
         image = quantizeImage(image, palette)
 
-    try:
-        image.save(target)
-    except IOError:
-        raise RuntimeError('Cannot write image file %s' % target)
+    saveImage(image, target)

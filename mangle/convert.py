@@ -18,6 +18,7 @@ import os
 import shutil
 
 from PyQt4 import QtGui, QtCore
+from image import ImageFlags
 
 import cbz
 import image
@@ -68,6 +69,14 @@ class DialogConvert(QtGui.QProgressDialog):
             shutil.rmtree(self.bookPath)
 
 
+    def convertAndSave(self, source, target, device, flags, archive, pdf):
+        image.convertImage(source, target, device, flags)
+        if archive is not None:
+            archive.addFile(target)
+        if pdf is not None:
+            pdf.addImage(target)
+
+                
     def onTimer(self):
         index = self.value()
         target = os.path.join(self.bookPath, '%05d.png' % index)
@@ -107,11 +116,26 @@ class DialogConvert(QtGui.QProgressDialog):
 
         try:
             if self.book.overwrite or not os.path.isfile(target):
-                image.convertImage(source, target, str(self.book.device), self.book.imageFlags)
-                if self.archive is not None:
-                    self.archive.addFile(target)
-                if self.pdf is not None:
-                    self.pdf.addImage(target)
+                device = str(self.book.device)
+                flags = self.book.imageFlags
+                archive = self.archive
+                pdf = self.pdf
+
+                # For right page (if requested)
+                if(self.book.imageFlags & ImageFlags.Split):
+                    # Increment counter to accomodate for extra page
+                    index = index + 1
+                    target = os.path.join(self.bookPath, '%05d.png' % index)
+                    self.convertAndSave(source,
+                                        target
+                                        device,
+                                        flags ^ ImageFlags.Split | ImageFlags.SplitRight,
+                                        archive,
+                                        pdf)
+
+                # Convert page
+                self.convertAndSave(source, target, device, flags, archive, pdf)
+
         except RuntimeError, error:
             result = QtGui.QMessageBox.critical(
                 self,
