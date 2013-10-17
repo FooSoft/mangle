@@ -14,19 +14,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
+from os.path import basename
 import os.path
-import util
+import tempfile
+from zipfile import ZipFile
+
 from PyQt4 import QtGui, QtCore, QtXml, uic
-from image import ImageFlags
+from natsort import natsorted
+
 from about import DialogAbout
-from options import DialogOptions
 from convert import DialogConvert
+from image import ImageFlags
+from options import DialogOptions
+import util
 
 
 class Book(object):
-    DefaultDevice = 'Kindle 4'
-    DefaultOutputFormat = 'Images & CBZ'
+    DefaultDevice = 'Kindle Paperwhite'
+    DefaultOutputFormat = 'CBZ only'
     DefaultOverwrite = True
     DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
 
@@ -36,6 +41,7 @@ class Book(object):
         self.filename = None
         self.modified = False
         self.title = None
+        self.titleSet = False
         self.device = Book.DefaultDevice
         self.overwrite = Book.DefaultOverwrite
         self.imageFlags = Book.DefaultImageFlags
@@ -112,7 +118,7 @@ class MainWindowBook(QtGui.QMainWindow):
     def __init__(self, filename=None):
         QtGui.QMainWindow.__init__(self)
 
-        uic.loadUi(util.buildResPath('ui/book.ui'), self)
+        uic.loadUi(util.buildResPath('mangle/ui/book.ui'), self)
         self.listWidgetFiles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.actionFileNew.triggered.connect(self.onFileNew)
         self.actionFileOpen.triggered.connect(self.onFileOpen)
@@ -207,14 +213,18 @@ class MainWindowBook(QtGui.QMainWindow):
         filenames = QtGui.QFileDialog.getOpenFileNames(
             parent=self,
             caption='Select image file(s) to add',
-            filter='Image files (*.jpeg *.jpg *.gif *.png);;All files (*.*)'
+            filter='Image files (*.jpeg *.jpg *.gif *.png);;Comic files (*.cbz)'
         )
-        self.addImageFiles(filenames)
+        if(self.containsCbzFile(filenames)):
+            self.addCBZFiles(filenames)
+        else:
+            self.addImageFiles(filenames)
 
 
     def onBookAddDirectory(self):
         directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select an image directory to add')
         if not directory.isNull():
+            self.book.title = os.path.basename(os.path.normpath(unicode(directory)))
             self.addImageDirs([directory])
 
 
@@ -232,7 +242,8 @@ class MainWindowBook(QtGui.QMainWindow):
 
     def onBookOptions(self):
         dialog = DialogOptions(self, self.book)
-        dialog.exec_()
+        if dialog.exec_() == QtGui.QDialog.Accepted:
+            self.book.titleSet = True
 
 
     def onBookExport(self):
@@ -240,10 +251,12 @@ class MainWindowBook(QtGui.QMainWindow):
             QtGui.QMessageBox.warning(self, 'Mangle', 'This book has no images to export')
             return
 
-        if self.book.title is None:
+        if not self.book.titleSet:  # if self.book.title is None:
             dialog = DialogOptions(self, self.book)
             if dialog.exec_() == QtGui.QDialog.Rejected:
                 return
+            else:
+                self.book.titleSet = True
 
         directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select a directory to export book to')
         if not directory.isNull():
@@ -253,7 +266,7 @@ class MainWindowBook(QtGui.QMainWindow):
 
     def onHelpHomepage(self):
         services = QtGui.QDesktopServices()
-        services.openUrl(QtCore.QUrl('http://foosoft.net/mangle'))
+        services.openUrl(QtCore.QUrl('https://github.com/catmanjan/mangle'))
 
 
     def onHelpAbout(self):
@@ -351,6 +364,32 @@ class MainWindowBook(QtGui.QMainWindow):
 
 
     def addImageFiles(self, filenames):
+        filenamesListed = []
+        for i in xrange(0, self.listWidgetFiles.count()):
+            filenamesListed.append(self.listWidgetFiles.item(i).text())
+
+        for filename in natsorted(filenames):
+            if filename not in filenamesListed:
+                filename = QtCore.QString(filename)
+                self.listWidgetFiles.addItem(filename)
+                self.book.images.append(filename)
+                self.book.modified = True
+
+    def addImageDirs(self, directories):
+        filenames = []
+
+        for directory in directories:
+            for root, _, subfiles in os.walk(unicode(directory)):
+                for filename in subfiles:
+                    path = os.path.join(root, filename)
+                    if self.isImageFile(path):
+                        filenames.append(path)
+
+        self.addImageFiles(filenames)
+
+    def addCBZFiles(self, filenames):
+        directories = []
+        tempDir = tempfile.gettempdir()
         filenames.sort()
 
         filenamesListed = []
@@ -358,24 +397,21 @@ class MainWindowBook(QtGui.QMainWindow):
             filenamesListed.append(self.listWidgetFiles.item(i).text())
 
         for filename in filenames:
-            if filename not in filenamesListed:
-                filename = QtCore.QString(filename)
-                self.listWidgetFiles.addItem(filename)
-                self.book.images.append(filename)
-                self.book.modified = True
-
-
-    def addImageDirs(self, directories):
-        filenames = []
-
-        for directory in directories:
-            for root, subdirs, subfiles in os.walk(unicode(directory)):
-                for filename in subfiles:
-                    path = os.path.join(root, filename)
-                    if self.isImageFile(path):
-                        filenames.append(path)
-
-        self.addImageFiles(filenames)
+            folderName = os.path.splitext(basename(str(filename)))[0]
+            path = tempDir + "/" + folderName + "/"
+            cbzFile = ZipFile(str(filename))
+            for f in cbzFile.namelist():
+                if f.endswith('/'):
+                    try:
+                        os.makedirs(path + f)
+                    except:
+                        pass  # the dir exists so we are going to extract the images only.
+                else:
+                    cbzFile.extract(f, path)
+            if os.path.isdir(unicode(path)):  # Add the directories
+                directories.append(path)
+        
+        self.addImageDirs(directories)  # Add the files
 
 
     def isImageFile(self, filename):
@@ -386,6 +422,17 @@ class MainWindowBook(QtGui.QMainWindow):
             os.path.splitext(filename)[1].lower() in imageExts
         )
 
+    def containsCbzFile(self, filenames):
+        cbzExts = ['.cbz']
+        for filename in filenames:
+            filename = unicode(filename)
+            result = (
+            os.path.isfile(filename) and
+            os.path.splitext(filename)[1].lower() in cbzExts
+            )
+            if result == True:
+                return result
+        return False     
 
     def cleanupBookFile(self, filename):
         if len(os.path.splitext(unicode(filename))[1]) == 0:

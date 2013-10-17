@@ -14,17 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-import util
-from PyQt4 import QtGui, QtCore, uic
+from PyQt4 import QtGui, uic
+
 from image import ImageFlags
+import util
 
 
 class DialogOptions(QtGui.QDialog):
     def __init__(self, parent, book):
         QtGui.QDialog.__init__(self, parent)
 
-        uic.loadUi(util.buildResPath('ui/options.ui'), self)
+        uic.loadUi(util.buildResPath('mangle/ui/options.ui'), self)
         self.accepted.connect(self.onAccept)
 
         self.book = book
@@ -42,6 +42,7 @@ class DialogOptions(QtGui.QDialog):
         self.checkboxOverwrite.setChecked(self.book.overwrite)
         self.checkboxOrient.setChecked(self.book.imageFlags & ImageFlags.Orient)
         self.checkboxResize.setChecked(self.book.imageFlags & ImageFlags.Resize)
+        self.checkboxStretch.setChecked(self.book.imageFlags & ImageFlags.Stretch)
         self.checkboxQuantize.setChecked(self.book.imageFlags & ImageFlags.Quantize)
         self.checkboxFrame.setChecked(self.book.imageFlags & ImageFlags.Frame)
 
@@ -57,10 +58,14 @@ class DialogOptions(QtGui.QDialog):
             imageFlags |= ImageFlags.Orient
         if self.checkboxResize.isChecked():
             imageFlags |= ImageFlags.Resize
+        if self.checkboxStretch.isChecked():
+            imageFlags |= ImageFlags.Stretch
         if self.checkboxQuantize.isChecked():
             imageFlags |= ImageFlags.Quantize
         if self.checkboxFrame.isChecked():
             imageFlags |= ImageFlags.Frame
+        if self.checkboxSplit.isChecked():
+            imageFlags |= ImageFlags.Split
 
         modified = (
             self.book.title != title or

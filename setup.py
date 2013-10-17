@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (C) 2010  Alex Yatskov
+# Copyright (C) 2013  Jan Martin
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,14 +16,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
 from distutils.core import setup
-import py2exe
+import sys
 
 
 sys.argv.append('py2exe')
 setup(
+    name='Mangle',
     windows=[{'script': 'mangle.pyw'}],
-    options={'py2exe': {'bundle_files': 1, 'includes': ['sip']}},
+    data_files=[('', ['LICENSE']),
+                  ('mangle/ui', ['mangle/ui/book.ui',
+                                 'mangle/ui/about.ui',
+                                 'mangle/ui/options.ui']),
+                  ('mangle/img', ['mangle/img/add_directory.png',
+                                  'mangle/img/add_file.png',
+                                  'mangle/img/banner_about.png',
+                                  'mangle/img/export_book.png',
+                                  'mangle/img/file_new.png',
+                                  'mangle/img/file_open.png',
+                                  'mangle/img/remove_files.png',
+                                  'mangle/img/save_file.png',
+                                  'mangle/img/shift_down.png',
+                                  'mangle/img/shift_up.png'])],
+    options={'py2exe': {
+        'bundle_files': 1,
+        'includes': ['sip'],
+        'packages': ['reportlab.pdfbase'],
+        'dll_excludes': ['w9xpopen.exe']
+    }},
     zipfile=None
 )

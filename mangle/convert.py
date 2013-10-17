@@ -14,10 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os, shutil
+import os
+import shutil
+
 from PyQt4 import QtGui, QtCore
-import image
+from image import ImageFlags
+
 import cbz
+import image
+import pdfimage
 
 
 class DialogConvert(QtGui.QProgressDialog):
@@ -35,6 +40,11 @@ class DialogConvert(QtGui.QProgressDialog):
         self.archive = None
         if 'CBZ' in self.book.outputFormat:
             self.archive = cbz.Archive(self.bookPath)
+        
+        self.pdf = None
+        if "PDF" in self.book.outputFormat:
+            self.pdf = pdfimage.PDFImage(self.bookPath, str(self.book.title), str(self.book.device))
+
 
 
     def showEvent(self, event):
@@ -50,12 +60,23 @@ class DialogConvert(QtGui.QProgressDialog):
         # Close the archive if we created a CBZ file
         if self.archive is not None:
             self.archive.close()
+        # Close and generate the PDF File
+        if self.pdf is not None:
+            self.pdf.close()
 
         # Remove image directory if the user didn't wish for images
         if 'Image' not in self.book.outputFormat:
             shutil.rmtree(self.bookPath)
 
 
+    def convertAndSave(self, source, target, device, flags, archive, pdf):
+        image.convertImage(source, target, device, flags)
+        if archive is not None:
+            archive.addFile(target)
+        if pdf is not None:
+            pdf.addImage(target)
+
+                
     def onTimer(self):
         index = self.value()
         target = os.path.join(self.bookPath, '%05d.png' % index)
@@ -95,9 +116,22 @@ class DialogConvert(QtGui.QProgressDialog):
 
         try:
             if self.book.overwrite or not os.path.isfile(target):
-                image.convertImage(source, target, str(self.book.device), self.book.imageFlags)
-                if self.archive is not None:
-                    self.archive.addFile(target)
+                device = str(self.book.device)
+                flags = self.book.imageFlags
+                archive = self.archive
+                pdf = self.pdf
+
+                # For right page (if requested)
+                if(self.book.imageFlags & ImageFlags.Split):
+                    # New path based on modified index
+                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
+                    self.convertAndSave(source, target, device, flags ^ ImageFlags.Split | ImageFlags.SplitRight, archive, pdf)
+                    # Change target once again for left page
+                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
+
+                # Convert page
+                self.convertAndSave(source, target, device, flags, archive, pdf)
+
         except RuntimeError, error:
             result = QtGui.QMessageBox.critical(
                 self,

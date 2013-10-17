@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # Copyright (C) 2010  Alex Yatskov
 #
@@ -17,7 +17,9 @@
 
 
 import sys
+
 from PyQt4 import QtGui
+
 from mangle.book import MainWindowBook
 
 
