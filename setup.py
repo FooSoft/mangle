@@ -16,16 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
 from distutils.core import setup
-import py2exe
+import sys
 
 
 sys.argv.append('py2exe')
 setup(
-    name = 'Mangle',
-    windows = [{'script': 'mangle.pyw'}],
-    data_files = [('', ['LICENSE']),
+    name='Mangle',
+    windows=[{'script': 'mangle.pyw'}],
+    data_files=[('', ['LICENSE']),
                   ('mangle/ui', ['mangle/ui/book.ui',
                                  'mangle/ui/about.ui',
                                  'mangle/ui/options.ui']),
@@ -39,11 +38,11 @@ setup(
                                   'mangle/img/save_file.png',
                                   'mangle/img/shift_down.png',
                                   'mangle/img/shift_up.png'])],
-    options = {'py2exe': {
+    options={'py2exe': {
         'bundle_files': 1,
         'includes': ['sip'],
         'packages': ['reportlab.pdfbase'],
         'dll_excludes': ['w9xpopen.exe']
     }},
-    zipfile = None
+    zipfile=None
 )

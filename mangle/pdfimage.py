@@ -17,8 +17,9 @@
 import os.path
 
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
+
 from image import KindleData
+
 
 class PDFImage(object):
     def __init__(self, path, title, device):
@@ -28,7 +29,7 @@ class PDFImage(object):
         self.currentDevice = device
         self.bookTitle = title
         self.pageSize = KindleData.Profiles[self.currentDevice][0]
-        #pagesize could be letter or A4 for standarization but we need to control some image sizes
+        # pagesize could be letter or A4 for standarization but we need to control some image sizes
         self.canvas = canvas.Canvas(outputPath, pagesize=self.pageSize)
         self.canvas.setAuthor("Mangle")
         self.canvas.setTitle(self.bookTitle)

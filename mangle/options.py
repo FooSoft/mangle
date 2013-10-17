@@ -14,10 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-import util
-from PyQt4 import QtGui, QtCore, uic
+from PyQt4 import QtGui, uic
+
 from image import ImageFlags
+import util
 
 
 class DialogOptions(QtGui.QDialog):
@@ -59,11 +59,13 @@ class DialogOptions(QtGui.QDialog):
         if self.checkboxResize.isChecked():
             imageFlags |= ImageFlags.Resize
         if self.checkboxStretch.isChecked():
-			imageFlags |= ImageFlags.Stretch
+            imageFlags |= ImageFlags.Stretch
         if self.checkboxQuantize.isChecked():
             imageFlags |= ImageFlags.Quantize
         if self.checkboxFrame.isChecked():
-			imageFlags |= ImageFlags.Frame
+            imageFlags |= ImageFlags.Frame
+        if self.checkboxSplit.isChecked():
+            imageFlags |= ImageFlags.Split
 
         modified = (
             self.book.title != title or

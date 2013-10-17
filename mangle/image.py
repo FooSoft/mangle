@@ -14,6 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 from PIL import Image, ImageDraw
 
 
@@ -23,6 +25,8 @@ class ImageFlags:
     Frame = 1 << 2
     Quantize = 1 << 3
     Stretch = 1 << 4
+    Split = 1 << 5
+    SplitRight = 1 << 6
 
 
 class KindleData:
@@ -79,6 +83,18 @@ class KindleData:
         'Kindle DXG': ((824, 1200), Palette15a),
         'Kindle Paperwhite': ((758, 1024), Palette15b)
     }
+    
+    
+def splitLeft(image):
+    widthImg, heightImg = image.size
+    
+    return image.crop((0, 0, widthImg / 2, heightImg))
+
+
+def splitRight(image):
+    widthImg, heightImg = image.size
+    
+    return image.crop((widthImg / 2, 0, widthImg, heightImg))
 
 
 def quantizeImage(image, palette):
@@ -93,8 +109,8 @@ def quantizeImage(image, palette):
 
 
 def stretchImage(image, size):
-	widthDev, heightDev = size
-	return image.resize((widthDev, heightDev), Image.ANTIALIAS)
+    widthDev, heightDev = size
+    return image.resize((widthDev, heightDev), Image.ANTIALIAS)
 
 def resizeImage(image, size):
     widthDev, heightDev = size
@@ -175,15 +191,24 @@ def convertImage(source, target, device, flags):
         raise RuntimeError('Cannot read image file %s' % source)
     image = formatImage(image)
     if flags & ImageFlags.Orient:
-		image = orientImage(image, size)
+        image = orientImage(image, size)
+    if flags & ImageFlags.SplitRight:
+        image = splitRight(image)
+    elif flags & ImageFlags.Split:
+        image = splitLeft(image)
+        # Recurse for right page
+        fileName, fileExtension = os.path.splitext(target)
+        newTarget = fileName + "r" + fileExtension
+        print(newTarget)
+        convertImage(source, newTarget, device, flags | ImageFlags.SplitRight)
     if flags & ImageFlags.Resize:
-		image = resizeImage(image, size)
+        image = resizeImage(image, size)
     if flags & ImageFlags.Stretch:
-		image = stretchImage(image, size)
+        image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
-		image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
+        image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
     if flags & ImageFlags.Quantize:
-		image = quantizeImage(image, palette)
+        image = quantizeImage(image, palette)
 
     try:
         image.save(target)

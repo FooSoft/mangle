@@ -159,6 +159,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="checkboxSplit">
+        <property name="text">
+         <string>Split left and right pages</string>
+        </property>
+       </widget>
+      </item>
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">

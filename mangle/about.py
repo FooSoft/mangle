@@ -14,9 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-import util
 from PyQt4 import QtGui, uic
+
+import util
 
 
 class DialogAbout(QtGui.QDialog):

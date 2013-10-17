@@ -14,18 +14,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-import os.path
 from os.path import basename
-import util
+import os.path
 import tempfile
-from PyQt4 import QtGui, QtCore, QtXml, uic
 from zipfile import ZipFile
-from image import ImageFlags
-from about import DialogAbout
-from options import DialogOptions
-from convert import DialogConvert
+
+from PyQt4 import QtGui, QtCore, QtXml, uic
 from natsort import natsorted
+
+from about import DialogAbout
+from convert import DialogConvert
+from image import ImageFlags
+from options import DialogOptions
+import util
 
 
 class Book(object):
@@ -250,7 +251,7 @@ class MainWindowBook(QtGui.QMainWindow):
             QtGui.QMessageBox.warning(self, 'Mangle', 'This book has no images to export')
             return
 
-        if not self.book.titleSet: # if self.book.title is None:
+        if not self.book.titleSet:  # if self.book.title is None:
             dialog = DialogOptions(self, self.book)
             if dialog.exec_() == QtGui.QDialog.Rejected:
                 return
@@ -378,7 +379,7 @@ class MainWindowBook(QtGui.QMainWindow):
         filenames = []
 
         for directory in directories:
-            for root, subdirs, subfiles in os.walk(unicode(directory)):
+            for root, _, subfiles in os.walk(unicode(directory)):
                 for filename in subfiles:
                     path = os.path.join(root, filename)
                     if self.isImageFile(path):
@@ -402,17 +403,16 @@ class MainWindowBook(QtGui.QMainWindow):
             for f in cbzFile.namelist():
                 if f.endswith('/'):
                     try:
-                        os.makedirs(path+f)
+                        os.makedirs(path + f)
                     except:
-                        pass #the dir exists so we are going to extract the images only.
+                        pass  # the dir exists so we are going to extract the images only.
                 else:
                     cbzFile.extract(f, path)
-			#Add the directories
-            if os.path.isdir(unicode(path)):
+            if os.path.isdir(unicode(path)):  # Add the directories
                 directories.append(path)
-        #Add the files
-        self.addImageDirs(directories)
-		
+        
+        self.addImageDirs(directories)  # Add the files
+
 
     def isImageFile(self, filename):
         imageExts = ['.jpeg', '.jpg', '.gif', '.png']

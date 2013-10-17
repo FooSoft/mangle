@@ -14,10 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os, shutil
+import os
+import shutil
+
 from PyQt4 import QtGui, QtCore
-import image
+
 import cbz
+import image
 import pdfimage
 
 
@@ -39,8 +42,8 @@ class DialogConvert(QtGui.QProgressDialog):
         
         self.pdf = None
         if "PDF" in self.book.outputFormat:
-			self.pdf = pdfimage.PDFImage(self.bookPath, str(self.book.title), str(self.book.device))
-			
+            self.pdf = pdfimage.PDFImage(self.bookPath, str(self.book.title), str(self.book.device))
+
 
 
     def showEvent(self, event):
@@ -56,9 +59,9 @@ class DialogConvert(QtGui.QProgressDialog):
         # Close the archive if we created a CBZ file
         if self.archive is not None:
             self.archive.close()
-        #Close and generate the PDF File
+        # Close and generate the PDF File
         if self.pdf is not None:
-			self.pdf.close()
+            self.pdf.close()
 
         # Remove image directory if the user didn't wish for images
         if 'Image' not in self.book.outputFormat:
@@ -108,7 +111,7 @@ class DialogConvert(QtGui.QProgressDialog):
                 if self.archive is not None:
                     self.archive.addFile(target)
                 if self.pdf is not None:
-					self.pdf.addImage(target)
+                    self.pdf.addImage(target)
         except RuntimeError, error:
             result = QtGui.QMessageBox.critical(
                 self,
