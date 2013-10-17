@@ -127,7 +127,7 @@ class DialogConvert(QtGui.QProgressDialog):
                     index = index + 1
                     target = os.path.join(self.bookPath, '%05d.png' % index)
                     self.convertAndSave(source,
-                                        target
+                                        target,
                                         device,
                                         flags ^ ImageFlags.Split | ImageFlags.SplitRight,
                                         archive,
