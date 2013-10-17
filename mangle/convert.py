@@ -123,15 +123,11 @@ class DialogConvert(QtGui.QProgressDialog):
 
                 # For right page (if requested)
                 if(self.book.imageFlags & ImageFlags.Split):
-                    # Increment counter to accomodate for extra page
-                    index = index + 1
-                    target = os.path.join(self.bookPath, '%05d.png' % index)
-                    self.convertAndSave(source,
-                                        target,
-                                        device,
-                                        flags ^ ImageFlags.Split | ImageFlags.SplitRight,
-                                        archive,
-                                        pdf)
+                    # New path based on modified index
+                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
+                    self.convertAndSave(source, target, device, flags ^ ImageFlags.Split | ImageFlags.SplitRight, archive, pdf)
+                    # Change target once again for left page
+                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
 
                 # Convert page
                 self.convertAndSave(source, target, device, flags, archive, pdf)
