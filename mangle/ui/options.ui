@@ -78,12 +78,22 @@
           </item>
           <item>
            <property name="text">
+            <string>Kindle 5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Kindle DX</string>
            </property>
           </item>
           <item>
            <property name="text">
             <string>Kindle DXG</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Kindle Paperwhite</string>
            </property>
           </item>
          </widget>
@@ -146,6 +156,13 @@
        <widget class="QCheckBox" name="checkboxFrame">
         <property name="text">
          <string>Draw frame around images</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkboxSplit">
+        <property name="text">
+         <string>Split images into two pages (right, left)</string>
         </property>
        </widget>
       </item>

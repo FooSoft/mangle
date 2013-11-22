@@ -17,7 +17,9 @@
 
 
 import sys
+
 from PyQt4 import QtGui
+
 from mangle.book import MainWindowBook
 
 
