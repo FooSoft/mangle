@@ -9,3 +9,9 @@
 - [ReportLab](https://pypi.python.org/pypi/reportlab)
 - [natsort](https://pypi.python.org/pypi/natsort/3.0.1)
 - [py2exe](http://www.py2exe.org/) (optional, for Windows distribution only)
+
+## Notice
+I'm no longer actively maintaining this project; many of the recent changes
+have been contributed by other developers. Significant contributors are:
+- [catmanjan](https://github.com/catmanjan/)
+- [Marek Kubica](https://github.com/Leonidas-from-XIV/)
