@@ -13,5 +13,6 @@
 ## Notice
 I'm no longer actively maintaining this project; many of the recent changes
 have been contributed by other developers. Significant contributors are:
-- [catmanjan](https://github.com/catmanjan/)
+- [Jan](https://github.com/catmanjan/)
+- [Jonathan Leaders](https://github.com/jleaders/)
 - [Marek Kubica](https://github.com/Leonidas-from-XIV/)
