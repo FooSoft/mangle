@@ -42,7 +42,7 @@ work without really doing anything (and it won't even cost you anything since Ma
 
 Here is a recent screenshot showing off some of the export options that you can configure on a per-book basis in Mangle:
 
-![Mangle options dialog](img/options.png)
+![Mangle options dialog](http://foosoft.net/projects/mangle/img/options.png)
 
 You can also check out what Mangle output looks like on the Kindle on the [action
 shots](http://foosoft.net/projects/mangle/action/) page.
