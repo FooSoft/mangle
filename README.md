@@ -92,5 +92,5 @@ If you don't want to run Mangle from source, you can use the following pre-built
 make MacOS X releases myself, I am providing the slightly out of date (and unsupported) package built by Rob White in
 its place. Linux users should execute the Python scripts with the interpreter and libraries installed on their system.
 
-*  [Windows](http://foosoft.net/projects/mangle/dl/mangle-win.zip)
-*  [MacOS X](http://foosoft.net/projects/mangle/dl/mangle-osx.zip)
+*  [magnle_win.zip](http://dl.foosoft.net/mangle/mangle_win.zip)
+*  [mangle_osx.zip](http://dl.foosoft.net/mangle/mangle_osx.zip)
