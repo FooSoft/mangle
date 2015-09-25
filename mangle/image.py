@@ -19,14 +19,17 @@ import os
 from PIL import Image, ImageDraw
 
 
+
 class ImageFlags:
     Orient = 1 << 0
     Resize = 1 << 1
     Frame = 1 << 2
     Quantize = 1 << 3
     Stretch = 1 << 4
-    Split = 1 << 5
-    SplitRight = 1 << 6
+    Split = 1 << 5         # split right then left
+    SplitRight = 1 << 6    # split only the right page
+    SplitLeft = 1 << 7     # split only the left page
+    SplitInverse = 1 << 8  # split left then right page
 
 
 class KindleData:
@@ -82,7 +85,8 @@ class KindleData:
         'Kindle DX': ((824, 1200), Palette15a),
         'Kindle DXG': ((824, 1200), Palette15a),
         'Kindle Touch': ((600, 800), Palette15a), 
-        'Kindle Paperwhite': ((758, 1024), Palette15b) # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
+        'Kindle Paperwhite': ((758, 1024), Palette15b), # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
+        'KoBo Aura H2o': ((1080, 1430), Palette15a), # resolution from http://www.fnac.com/Liseuse-Numerique-Kobo-by-Fnac-Kobo-Aura-H2O-Noir/a7745120/w-4
     }
     
     
@@ -204,10 +208,20 @@ def convertImage(source, target, device, flags):
     # Format according to palette
     image = formatImage(image)
     # Apply flag transforms
+
+    # Second pass of first split
     if flags & ImageFlags.SplitRight:
         image = splitRight(image)
-    if flags & ImageFlags.Split:
+    # First pass of first split option
+    if (flags & ImageFlags.Split):
         image = splitLeft(image)
+    # First pass of second splitting option
+    if flags & ImageFlags.SplitLeft:
+        image = splitLeft(image)
+    # second pass of second splitting option
+    if (flags & ImageFlags.SplitInverse):
+        image = splitRight(image)
+
     if flags & ImageFlags.Orient:
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:

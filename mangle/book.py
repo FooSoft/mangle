@@ -13,20 +13,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import re
 from os.path import basename
 import os.path
 import tempfile
 from zipfile import ZipFile
 
 from PyQt4 import QtGui, QtCore, QtXml, uic
-from natsort import natsorted
 
 from about import DialogAbout
 from convert import DialogConvert
 from image import ImageFlags
 from options import DialogOptions
 import util
+
+
+# Sort function use to sort files in a natural order, by lowering
+# characters, and manage multi levels of integers (tome 1/ page 1.jpg, etc etc)
+def natural_key(string_):
+    """See http://www.codinghorror.com/blog/archives/001018.html"""
+    return [int(s) if s.isdigit() else s.lower() for s in re.split(r'(\d+)', string_)]
 
 
 class Book(object):
@@ -367,13 +373,15 @@ class MainWindowBook(QtGui.QMainWindow):
         filenamesListed = []
         for i in xrange(0, self.listWidgetFiles.count()):
             filenamesListed.append(self.listWidgetFiles.item(i).text())
-
-        for filename in natsorted(filenames):
+        
+        # Get files but in a natural sorted order
+        for filename in sorted(filenames, key=natural_key):
             if filename not in filenamesListed:
                 filename = QtCore.QString(filename)
                 self.listWidgetFiles.addItem(filename)
                 self.book.images.append(filename)
                 self.book.modified = True
+
 
     def addImageDirs(self, directories):
         filenames = []
@@ -386,6 +394,7 @@ class MainWindowBook(QtGui.QMainWindow):
                         filenames.append(path)
 
         self.addImageFiles(filenames)
+
 
     def addCBZFiles(self, filenames):
         directories = []
