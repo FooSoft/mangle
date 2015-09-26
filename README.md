@@ -80,7 +80,6 @@ of your choice. First you should make sure that you have the required dependenci
 *   [Python 2.7](http://www.python.org/download/releases/2.7/)
 *   [Python Imaging Library (PIL)](http://www.pythonware.com/products/pil/)
 *   [ReportLab](https://pypi.python.org/pypi/reportlab)
-*   [natsort](https://pypi.python.org/pypi/natsort/3.0.1)
 *   [py2exe](http://www.py2exe.org/) (optional, for Windows distribution only)
 
 Now you can fetch the [latest version of the code](https://github.com/FooSoft/mangle/) and run the `mangle.pyw` script

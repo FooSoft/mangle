@@ -129,6 +129,14 @@ class DialogConvert(QtGui.QProgressDialog):
                     # Change target once again for left page
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
 
+                # For right page (if requested), but in inverted mode
+                if(self.book.imageFlags & ImageFlags.SplitInverse):
+                    # New path based on modified index
+                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
+                    self.convertAndSave(source, target, device, flags ^ ImageFlags.SplitInverse | ImageFlags.SplitLeft, archive, pdf)
+                    # Change target once again for left page
+                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
+
                 # Convert page
                 self.convertAndSave(source, target, device, flags, archive, pdf)
 

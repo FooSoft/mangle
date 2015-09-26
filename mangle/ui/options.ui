@@ -101,6 +101,11 @@
             <string>Kindle Paperwhite</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>KoBo Aura H2o</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item row="1" column="0">
@@ -168,6 +173,13 @@
        <widget class="QCheckBox" name="checkboxSplit">
         <property name="text">
          <string>Split images into two pages (right, left)</string>
+        </property>
+       </widget>
+      </item>
+       <item>
+       <widget class="QCheckBox" name="checkboxSplitInverse">
+        <property name="text">
+         <string>Split images into two pages (left, right)</string>
         </property>
        </widget>
       </item>
