@@ -88,20 +88,36 @@ class KindleData:
         'Kindle Paperwhite': ((758, 1024), Palette15b), # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
         'KoBo Aura H2o': ((1080, 1430), Palette15a), # resolution from http://www.fnac.com/Liseuse-Numerique-Kobo-by-Fnac-Kobo-Aura-H2O-Noir/a7745120/w-4
     }
+
+
+# decorate a function that use image, *** and if there
+# is an exception raise by PIL (IOError) then return
+# the original image because PIL cannot manage it
+def protect_bad_image(func):
+    def func_wrapper(*args, **kwargs):
+        # If cannot convert (like a bogus image) return the original one
+        # args will be "image" and other params are after
+        try:
+            return func(*args, **kwargs)
+        except IOError: # Exception from PIL about bad image
+            return args[0]
+    return func_wrapper
     
-    
+
+@protect_bad_image    
 def splitLeft(image):
     widthImg, heightImg = image.size
-    
     return image.crop((0, 0, widthImg / 2, heightImg))
 
 
+@protect_bad_image
 def splitRight(image):
     widthImg, heightImg = image.size
-    
+
     return image.crop((widthImg / 2, 0, widthImg, heightImg))
 
 
+@protect_bad_image
 def quantizeImage(image, palette):
     colors = len(palette) / 3
     if colors < 256:
@@ -113,10 +129,14 @@ def quantizeImage(image, palette):
     return image.quantize(palette=palImg)
 
 
+@protect_bad_image
 def stretchImage(image, size):
     widthDev, heightDev = size
+
     return image.resize((widthDev, heightDev), Image.ANTIALIAS)
 
+
+@protect_bad_image
 def resizeImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
@@ -140,19 +160,21 @@ def resizeImage(image, size):
     return image.resize((widthImg, heightImg), Image.ANTIALIAS)
 
 
+@protect_bad_image
 def formatImage(image):
     if image.mode == 'RGB':
         return image
+
     return image.convert('RGB')
 
 
+@protect_bad_image
 def orientImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
 
     if (widthImg > heightImg) != (widthDev > heightDev):
         return image.rotate(90, Image.BICUBIC, True)
-
     return image
 
 
