@@ -1,4 +1,3 @@
-=======
 # Mangle #
 
 Many years ago I received an [Amazon Kindle](http://en.wikipedia.org/wiki/Kindle) gift. I immediately began playing
