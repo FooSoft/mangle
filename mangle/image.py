@@ -19,14 +19,17 @@ import os
 from PIL import Image, ImageDraw
 
 
+
 class ImageFlags:
     Orient = 1 << 0
     Resize = 1 << 1
     Frame = 1 << 2
     Quantize = 1 << 3
     Stretch = 1 << 4
-    Split = 1 << 5
-    SplitRight = 1 << 6
+    Split = 1 << 5         # split right then left
+    SplitRight = 1 << 6    # split only the right page
+    SplitLeft = 1 << 7     # split only the left page
+    SplitInverse = 1 << 8  # split left then right page
 
 
 class KindleData:
@@ -82,22 +85,39 @@ class KindleData:
         'Kindle DX': ((824, 1200), Palette15a),
         'Kindle DXG': ((824, 1200), Palette15a),
         'Kindle Touch': ((600, 800), Palette15a), 
-        'Kindle Paperwhite': ((758, 1024), Palette15b) # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
+        'Kindle Paperwhite': ((758, 1024), Palette15b), # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
+        'KoBo Aura H2o': ((1080, 1430), Palette15a), # resolution from http://www.fnac.com/Liseuse-Numerique-Kobo-by-Fnac-Kobo-Aura-H2O-Noir/a7745120/w-4
     }
+
+
+# decorate a function that use image, *** and if there
+# is an exception raise by PIL (IOError) then return
+# the original image because PIL cannot manage it
+def protect_bad_image(func):
+    def func_wrapper(*args, **kwargs):
+        # If cannot convert (like a bogus image) return the original one
+        # args will be "image" and other params are after
+        try:
+            return func(*args, **kwargs)
+        except IOError: # Exception from PIL about bad image
+            return args[0]
+    return func_wrapper
     
-    
+
+@protect_bad_image    
 def splitLeft(image):
     widthImg, heightImg = image.size
-    
     return image.crop((0, 0, widthImg / 2, heightImg))
 
 
+@protect_bad_image
 def splitRight(image):
     widthImg, heightImg = image.size
-    
+
     return image.crop((widthImg / 2, 0, widthImg, heightImg))
 
 
+@protect_bad_image
 def quantizeImage(image, palette):
     colors = len(palette) / 3
     if colors < 256:
@@ -109,10 +129,14 @@ def quantizeImage(image, palette):
     return image.quantize(palette=palImg)
 
 
+@protect_bad_image
 def stretchImage(image, size):
     widthDev, heightDev = size
+
     return image.resize((widthDev, heightDev), Image.ANTIALIAS)
 
+
+@protect_bad_image
 def resizeImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
@@ -136,19 +160,21 @@ def resizeImage(image, size):
     return image.resize((widthImg, heightImg), Image.ANTIALIAS)
 
 
+@protect_bad_image
 def formatImage(image):
     if image.mode == 'RGB':
         return image
+
     return image.convert('RGB')
 
 
+@protect_bad_image
 def orientImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
 
     if (widthImg > heightImg) != (widthDev > heightDev):
         return image.rotate(90, Image.BICUBIC, True)
-
     return image
 
 
@@ -204,10 +230,20 @@ def convertImage(source, target, device, flags):
     # Format according to palette
     image = formatImage(image)
     # Apply flag transforms
+
+    # Second pass of first split
     if flags & ImageFlags.SplitRight:
         image = splitRight(image)
-    if flags & ImageFlags.Split:
+    # First pass of first split option
+    if (flags & ImageFlags.Split):
         image = splitLeft(image)
+    # First pass of second splitting option
+    if flags & ImageFlags.SplitLeft:
+        image = splitLeft(image)
+    # second pass of second splitting option
+    if (flags & ImageFlags.SplitInverse):
+        image = splitRight(image)
+
     if flags & ImageFlags.Orient:
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:
