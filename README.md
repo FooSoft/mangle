@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-## Downloads
-- [Mangle for Windows](ftp://foosoft.net/releases/mangle/mangle_win.zip)
-- [Mangle for MacOS (Old)](ftp://foosoft.net/releases/mangle/mangle_osx.zip)
-
-## For Developers
-- [Python 2.7](http://www.python.org/download/releases/2.7/)
-- [Python Image Library (PIL)](http://www.pythonware.com/products/pil/)
-- [PyQT4](http://www.riverbankcomputing.com/software/pyqt/download)
-- [ReportLab](https://pypi.python.org/pypi/reportlab)
-- [natsort](https://pypi.python.org/pypi/natsort/3.0.1)
-- [py2exe](http://www.py2exe.org/) (optional, for Windows distribution only)
 =======
 # Mangle #
 
@@ -106,4 +94,3 @@ its place. Linux users should execute the Python scripts with the interpreter an
 
 *  [magnle_win.zip](http://dl.foosoft.net/mangle/mangle_win.zip)
 *  [mangle_osx.zip](http://dl.foosoft.net/mangle/mangle_osx.zip)
->>>>>>> cedfe3fc512a8f58680d8fa0618143d423c3112d
