@@ -103,6 +103,11 @@
           </item>
           <item>
            <property name="text">
+            <string>Kindle Paperwhite 3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>KoBo Aura H2o</string>
            </property>
           </item>
