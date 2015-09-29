@@ -66,6 +66,8 @@ class DialogOptions(QtGui.QDialog):
             imageFlags |= ImageFlags.Frame
         if self.checkboxSplit.isChecked():
             imageFlags |= ImageFlags.Split
+        if self.checkboxSplitInverse.isChecked():
+            imageFlags |= ImageFlags.SplitInverse
 
         modified = (
             self.book.title != title or

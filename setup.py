@@ -32,6 +32,7 @@ setup(
                   ('mangle/img', ['mangle/img/add_directory.png',
                                   'mangle/img/add_file.png',
                                   'mangle/img/banner_about.png',
+                                  'mangle/img/book.png',
                                   'mangle/img/export_book.png',
                                   'mangle/img/file_new.png',
                                   'mangle/img/file_open.png',

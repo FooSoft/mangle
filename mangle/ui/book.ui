@@ -180,6 +180,10 @@
    </property>
   </action>
   <action name="actionBookOptions">
+  <property name="icon">
+    <iconset>
+     <normaloff>../img/book.png</normaloff>../img/book.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Options...</string>
    </property>
