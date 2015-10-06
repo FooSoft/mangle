@@ -121,8 +121,18 @@ class DialogConvert(QtGui.QProgressDialog):
                 archive = self.archive
                 pdf = self.pdf
 
-                # For right page (if requested)
-                if(self.book.imageFlags & ImageFlags.Split):
+                
+                # Maybe the user ask for a split, but the picture is not a large one, so skip
+                # it but only for this picture
+                if (flags & ImageFlags.Split) or (flags & ImageFlags.SplitInverse):
+                    if not image.isSplitable(source):
+                        # remove split flags
+                        splitFlags= [ImageFlags.Split, ImageFlags.SplitInverse, ImageFlags.SplitRight, ImageFlags.SplitLeft]
+                        for f in splitFlags:
+                            flags &= ~f
+
+                # For right page (if requested in options and need for this image)
+                if(flags & ImageFlags.Split):
                     # New path based on modified index
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
                     self.convertAndSave(source, target, device, flags ^ ImageFlags.Split | ImageFlags.SplitRight, archive, pdf)
@@ -130,7 +140,7 @@ class DialogConvert(QtGui.QProgressDialog):
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
 
                 # For right page (if requested), but in inverted mode
-                if(self.book.imageFlags & ImageFlags.SplitInverse):
+                if(flags & ImageFlags.SplitInverse):
                     # New path based on modified index
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
                     self.convertAndSave(source, target, device, flags ^ ImageFlags.SplitInverse | ImageFlags.SplitLeft, archive, pdf)

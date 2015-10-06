@@ -221,6 +221,18 @@ def saveImage(image, target):
         raise RuntimeError('Cannot write image file %s' % target)
 
 
+# Look if the image is more width than hight, if not, means
+# it's should not be split (like the front page of a manga,
+# when all the inner pages are double)
+def isSplitable(source):
+    image = loadImage(source)
+    try:
+        widthImg, heightImg = image.size
+        return  widthImg > heightImg
+    except IOError: 
+        raise RuntimeError('Cannot read image file %s' % source)
+
+
 def convertImage(source, target, device, flags):
     try:
         size, palette = KindleData.Profiles[device]
