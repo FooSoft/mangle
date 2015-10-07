@@ -36,21 +36,21 @@ def natural_key(string_):
 
 
 class Book(object):
-    DefaultDevice = 'Kindle Paperwhite'
+    DefaultDevice       = 'Kindle Paperwhite'
     DefaultOutputFormat = 'CBZ only'
-    DefaultOverwrite = True
-    DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
+    DefaultOverwrite    = True
+    DefaultImageFlags   = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
 
 
     def __init__(self):
-        self.images = []
-        self.filename = None
-        self.modified = False
-        self.title = None
-        self.titleSet = False
-        self.device = Book.DefaultDevice
-        self.overwrite = Book.DefaultOverwrite
-        self.imageFlags = Book.DefaultImageFlags
+        self.images       = []
+        self.filename     = None
+        self.modified     = False
+        self.title        = None
+        self.titleSet     = False
+        self.device       = Book.DefaultDevice
+        self.overwrite    = Book.DefaultOverwrite
+        self.imageFlags   = Book.DefaultImageFlags
         self.outputFormat = Book.DefaultOutputFormat
 
 
@@ -101,14 +101,14 @@ class Book(object):
         if root.tagName() != 'book':
             raise RuntimeError('Unexpected book format in file %s' % filename)
 
-        self.title = root.attribute('title', 'Untitled')
-        self.overwrite = root.attribute('overwrite', 'true' if Book.DefaultOverwrite else 'false') == 'true'
-        self.device = root.attribute('device', Book.DefaultDevice)
+        self.title        = root.attribute('title', 'Untitled')
+        self.overwrite    = root.attribute('overwrite', 'true' if Book.DefaultOverwrite else 'false') == 'true'
+        self.device       = root.attribute('device', Book.DefaultDevice)
         self.outputFormat = root.attribute('outputFormat', Book.DefaultOutputFormat)
-        self.imageFlags = int(root.attribute('imageFlags', str(Book.DefaultImageFlags)))
-        self.filename = filename
-        self.modified = False
-        self.images = []
+        self.imageFlags   = int(root.attribute('imageFlags', str(Book.DefaultImageFlags)))
+        self.filename     = filename
+        self.modified     = False
+        self.images       = []
 
         items = root.elementsByTagName('image')
         if items is None:

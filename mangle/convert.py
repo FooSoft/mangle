@@ -16,10 +16,10 @@
 
 import os
 import shutil
-
 from PyQt4 import QtGui, QtCore
-from image import ImageFlags
 
+
+from image import ImageFlags
 import cbz
 import image
 import pdfimage
@@ -29,7 +29,7 @@ class DialogConvert(QtGui.QProgressDialog):
     def __init__(self, parent, book, directory):
         QtGui.QProgressDialog.__init__(self)
 
-        self.book = book
+        self.book     = book
         self.bookPath = os.path.join(unicode(directory), unicode(self.book.title))
 
         self.timer = None
@@ -121,7 +121,6 @@ class DialogConvert(QtGui.QProgressDialog):
                 archive = self.archive
                 pdf = self.pdf
 
-                
                 # Maybe the user ask for a split, but the picture is not a large one, so skip
                 # it but only for this picture
                 if (flags & ImageFlags.Split) or (flags & ImageFlags.SplitInverse):
@@ -132,7 +131,7 @@ class DialogConvert(QtGui.QProgressDialog):
                             flags &= ~f
 
                 # For right page (if requested in options and need for this image)
-                if(flags & ImageFlags.Split):
+                if (flags & ImageFlags.Split):
                     # New path based on modified index
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
                     self.convertAndSave(source, target, device, flags ^ ImageFlags.Split | ImageFlags.SplitRight, archive, pdf)
@@ -140,7 +139,7 @@ class DialogConvert(QtGui.QProgressDialog):
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
 
                 # For right page (if requested), but in inverted mode
-                if(flags & ImageFlags.SplitInverse):
+                if (flags & ImageFlags.SplitInverse):
                     # New path based on modified index
                     target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
                     self.convertAndSave(source, target, device, flags ^ ImageFlags.SplitInverse | ImageFlags.SplitLeft, archive, pdf)
