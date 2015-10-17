@@ -16,20 +16,20 @@
 
 import os
 
-from PIL import Image, ImageDraw
-
+from PIL import Image, ImageDraw, ImageStat, ImageChops
 
 
 class ImageFlags:
-    Orient = 1 << 0
-    Resize = 1 << 1
-    Frame = 1 << 2
-    Quantize = 1 << 3
-    Stretch = 1 << 4
-    Split = 1 << 5         # split right then left
-    SplitRight = 1 << 6    # split only the right page
-    SplitLeft = 1 << 7     # split only the left page
+    Orient       = 1 << 0
+    Resize       = 1 << 1
+    Frame        = 1 << 2
+    Quantize     = 1 << 3
+    Stretch      = 1 << 4
+    Split        = 1 << 5         # split right then left
+    SplitRight   = 1 << 6    # split only the right page
+    SplitLeft    = 1 << 7     # split only the left page
     SplitInverse = 1 << 8  # split left then right page
+    AutoCrop     = 1 << 9  # split left then right page
 
 
 class KindleData:
@@ -179,6 +179,15 @@ def orientImage(image, size):
     return image
 
 
+# We will auto crop the image, by removing just white part around the image
+# by inverting colors, and asking a bounder box ^^
+@protect_bad_image
+def autoCropImage(image):
+    x0, y0, xend, yend = ImageChops.invert(image).getbbox()
+    image = image.crop((x0, y0, xend, yend))
+    return image
+
+
 def frameImage(image, foreground, background, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
@@ -240,6 +249,9 @@ def convertImage(source, target, device, flags):
         raise RuntimeError('Unexpected output device %s' % device)
     # Load image from source path
     image = loadImage(source)
+
+    
+
     # Format according to palette
     image = formatImage(image)
     # Apply flag transforms
@@ -257,6 +269,10 @@ def convertImage(source, target, device, flags):
     if (flags & ImageFlags.SplitInverse):
         image = splitRight(image)
 
+    # Auto crop the image, but before manage size and co, clean the source so
+    if flags & ImageFlags.AutoCrop:
+        image = autoCropImage(image)
+
     if flags & ImageFlags.Orient:
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:
@@ -265,7 +281,10 @@ def convertImage(source, target, device, flags):
         image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
+
+
+
     if flags & ImageFlags.Quantize:
         image = quantizeImage(image, palette)
-
+    
     saveImage(image, target)

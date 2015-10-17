@@ -72,6 +72,8 @@ class DialogOptions(QtGui.QDialog):
             imageFlags |= ImageFlags.Split
         if self.checkboxSplitInverse.isChecked():
             imageFlags |= ImageFlags.SplitInverse
+        if self.checkboxAutoCrop.isChecked():
+            imageFlags |= ImageFlags.AutoCrop
 
         # If we did modified a value, update the book
         # and only if we did change something to not

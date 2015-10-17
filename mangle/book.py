@@ -30,9 +30,18 @@ import util
 
 # Sort function use to sort files in a natural order, by lowering
 # characters, and manage multi levels of integers (tome 1/ page 1.jpg, etc etc)
+# cf: See http://www.codinghorror.com/blog/archives/001018.html
 def natural_key(string_):
-    """See http://www.codinghorror.com/blog/archives/001018.html"""
-    return [int(s) if s.isdigit() else s.lower() for s in re.split(r'(\d+)', string_)]
+    l = []
+    for s in re.split(r'(\d+)', string_):
+        # QString do not have isdigit, so convert it if need
+        if isinstance(s, QtCore.QString):
+            s = unicode(s)
+        if s.isdigit():
+            l.append(int(s))
+        else:
+            l.append(s.lower())
+    return l
 
 
 class Book(object):
