@@ -30,27 +30,36 @@ import util
 
 # Sort function use to sort files in a natural order, by lowering
 # characters, and manage multi levels of integers (tome 1/ page 1.jpg, etc etc)
+# cf: See http://www.codinghorror.com/blog/archives/001018.html
 def natural_key(string_):
-    """See http://www.codinghorror.com/blog/archives/001018.html"""
-    return [int(s) if s.isdigit() else s.lower() for s in re.split(r'(\d+)', string_)]
+    l = []
+    for s in re.split(r'(\d+)', string_):
+        # QString do not have isdigit, so convert it if need
+        if isinstance(s, QtCore.QString):
+            s = unicode(s)
+        if s.isdigit():
+            l.append(int(s))
+        else:
+            l.append(s.lower())
+    return l
 
 
 class Book(object):
-    DefaultDevice = 'Kindle Paperwhite'
+    DefaultDevice       = 'Kindle Paperwhite'
     DefaultOutputFormat = 'CBZ only'
-    DefaultOverwrite = True
-    DefaultImageFlags = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
+    DefaultOverwrite    = True
+    DefaultImageFlags   = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize
 
 
     def __init__(self):
-        self.images = []
-        self.filename = None
-        self.modified = False
-        self.title = None
-        self.titleSet = False
-        self.device = Book.DefaultDevice
-        self.overwrite = Book.DefaultOverwrite
-        self.imageFlags = Book.DefaultImageFlags
+        self.images       = []
+        self.filename     = None
+        self.modified     = False
+        self.title        = None
+        self.titleSet     = False
+        self.device       = Book.DefaultDevice
+        self.overwrite    = Book.DefaultOverwrite
+        self.imageFlags   = Book.DefaultImageFlags
         self.outputFormat = Book.DefaultOutputFormat
 
 
@@ -101,14 +110,14 @@ class Book(object):
         if root.tagName() != 'book':
             raise RuntimeError('Unexpected book format in file %s' % filename)
 
-        self.title = root.attribute('title', 'Untitled')
-        self.overwrite = root.attribute('overwrite', 'true' if Book.DefaultOverwrite else 'false') == 'true'
-        self.device = root.attribute('device', Book.DefaultDevice)
+        self.title        = root.attribute('title', 'Untitled')
+        self.overwrite    = root.attribute('overwrite', 'true' if Book.DefaultOverwrite else 'false') == 'true'
+        self.device       = root.attribute('device', Book.DefaultDevice)
         self.outputFormat = root.attribute('outputFormat', Book.DefaultOutputFormat)
-        self.imageFlags = int(root.attribute('imageFlags', str(Book.DefaultImageFlags)))
-        self.filename = filename
-        self.modified = False
-        self.images = []
+        self.imageFlags   = int(root.attribute('imageFlags', str(Book.DefaultImageFlags)))
+        self.filename     = filename
+        self.modified     = False
+        self.images       = []
 
         items = root.elementsByTagName('image')
         if items is None:

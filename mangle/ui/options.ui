@@ -181,14 +181,21 @@
         </property>
        </widget>
       </item>
-       <item>
+      <item>
        <widget class="QCheckBox" name="checkboxSplitInverse">
         <property name="text">
          <string>Split images into two pages (left, right)</string>
         </property>
        </widget>
       </item>
-        <item>
+      <item>
+       <widget class="QCheckBox" name="checkboxAutoCrop">
+        <property name="text">
+         <string>Auto crop image (remove white around the image)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Size</string>

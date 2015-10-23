@@ -35,6 +35,7 @@ class DialogOptions(QtGui.QDialog):
         self.moveDialogToOptions()
 
 
+    # Get options from current book (like a loaded one) and set the dialog values
     def moveOptionsToDialog(self):
         self.lineEditTitle.setText(self.book.title or 'Untitled')
         self.comboBoxDevice.setCurrentIndex(max(self.comboBoxDevice.findText(self.book.device), 0))
@@ -47,12 +48,15 @@ class DialogOptions(QtGui.QDialog):
         self.checkboxFrame.setChecked(self.book.imageFlags & ImageFlags.Frame)
 
 
+    # Save parameters set on the dialogs to the book object if need
     def moveDialogToOptions(self):
-        title = self.lineEditTitle.text()
-        device = self.comboBoxDevice.currentText()
+        # First get dialog values
+        title        = self.lineEditTitle.text()
+        device       = self.comboBoxDevice.currentText()
         outputFormat = self.comboBoxFormat.currentText()
-        overwrite = self.checkboxOverwrite.isChecked()
+        overwrite    = self.checkboxOverwrite.isChecked()
 
+        # Now compute flags
         imageFlags = 0
         if self.checkboxOrient.isChecked():
             imageFlags |= ImageFlags.Orient
@@ -68,7 +72,12 @@ class DialogOptions(QtGui.QDialog):
             imageFlags |= ImageFlags.Split
         if self.checkboxSplitInverse.isChecked():
             imageFlags |= ImageFlags.SplitInverse
+        if self.checkboxAutoCrop.isChecked():
+            imageFlags |= ImageFlags.AutoCrop
 
+        # If we did modified a value, update the book
+        # and only if we did change something to not
+        # warn for nothing the user
         modified = (
             self.book.title != title or
             self.book.device != device or
@@ -78,9 +87,9 @@ class DialogOptions(QtGui.QDialog):
         )
 
         if modified:
-            self.book.modified = True
-            self.book.title = title
-            self.book.device = device
-            self.book.overwrite = overwrite
-            self.book.imageFlags = imageFlags
+            self.book.modified     = True
+            self.book.title        = title
+            self.book.device       = device
+            self.book.overwrite    = overwrite
+            self.book.imageFlags   = imageFlags
             self.book.outputFormat = outputFormat
