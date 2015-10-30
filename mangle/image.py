@@ -183,7 +183,10 @@ def orientImage(image, size):
 # by inverting colors, and asking a bounder box ^^
 @protect_bad_image
 def autoCropImage(image):
-    x0, y0, xend, yend = ImageChops.invert(image).getbbox()
+    try:
+        x0, y0, xend, yend = ImageChops.invert(image).getbbox()
+    except TypeError: # bad image, specific to chops
+        return image
     image = image.crop((x0, y0, xend, yend))
     return image
 
