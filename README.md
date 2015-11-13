@@ -16,9 +16,9 @@ However... The Kindle's image viewer does have certain shortcomings:
 *   The first image that you view in a Manga (until the Kindle first writes the "bookmark" file) seems to be arbitrary
     even when files are named sequentially.  About half the time it will correctly pick the first file in the batch, at
     other times it will pick out some other image seemingly at random.
-*   Normally for Kindle to find your Manga scans you have to press Alt+Z on the home screen. I haven't always had luck
-    with it correctly identifying image directories. At other times, after finding an image directory the Kindle will
-    appear to hang while trying to access it (forcing you to return to the home screen).
+*   Normally for Kindle to find your Manga scans you have to press <kbd>Alt+Z</kbd> on the home screen. I haven't
+    always had luck with it correctly identifying image directories. At other times, after finding an image directory
+    the Kindle will appear to hang while trying to access it (forcing you to return to the home screen).
 *   The Kindle image viewer has no functionality to rotate images. So if there is a horizontally large image (such as
     what often happens with dual-page scans), it can be difficult to make out the text because the image is simply
     scaled to fit (consequently leaving a lot of wasted space at the bottom of the screen).
@@ -33,23 +33,16 @@ However... The Kindle's image viewer does have certain shortcomings:
 I was annoyed with these issues and thus Mangle was born (the program name is a mix of "Manga" and "Kindle" in case you
 haven't figured it out yet; I thought it was pretty clever at the time). Fortunately you can get all the benefits of my
 work without really doing anything (and it won't even cost you anything since Mangle is free,
-[GPL](http://www.gnu.org/licenses/gpl-3.0.txt) software.  With Mangle you can easily:
+[GPL](http://www.gnu.org/licenses/gpl-3.0.txt) software. With Mangle you can easily:
 
 *   Sort and organize images from different directories; bulk rename feature for output to the Kindle.
 *   Optionally re-save images in a format Kindle will be sure to understand with no visible quality loss.
 *   Downsample and rotate images for optimal viewing on Kindle, convert to grayscale to save space and improve contrast.
 *   Automatically generate book meta-data so that your Manga is always properly detected and viewable in-order.
 
-Here is a recent screenshot showing off some of the export options that you can configure on a per-book basis in Mangle:
-
-![Mangle options dialog](http://foosoft.net/projects/mangle/img/options.png)
-
-You can also check out what Mangle output looks like on the Kindle on the [action
-shots](http://foosoft.net/projects/mangle/action/) page.
-
 Mangle is cross platform, and doesn't require an install (it's a standalone executable that you can run from anywhere).
-It is also "environmentally friendly" by not messing with your registry or modifying your system in any way.  If you
-ever want to uninstall it, just delete the executable and you're done.
+It is also "environmentally friendly" by not messing with your registry or modifying your system in any way. If you ever
+want to uninstall it, just delete the executable and you're done.
 
 ## Usage Instructions ##
 
@@ -64,23 +57,17 @@ Mangle is pretty easy to use, so this won't be really in-depth. If you have any 
 5.  Once you are satisfied with the your images and options select `Book | Export` and select the `pictures` directory
     you just created.
 6.  After the export is complete your new Manga books will show up along with all your other books (if they don't for
-    some reason, press `Alt+Z` while on the home menu).
-
-## The Usual Disclaimer ##
-
-You probably know how this goes by now... Mess around with your Kindle at your own risk. Honestly, nothing bad is going
-to happen; however if something *does* then it's your problem.
+    some reason, press <kbd>Alt+Z</kbd> while on the home menu).
 
 ## Running From Source ##
 
-Because Mangle is written in Python, a scripting language, it's trivial to get it up and running on the operating system
-of your choice. First you should make sure that you have the required dependencies installed:
+As Mangle is written in [Python](/tags/python/), a scripting language, it's trivial to get it up and running on the
+operating system of your choice. First you should make sure that you have the required dependencies installed:
 
 *   [PyQT4](http://www.riverbankcomputing.com/software/pyqt/download)
 *   [Python 2.7](http://www.python.org/download/releases/2.7/)
 *   [Python Imaging Library (PIL)](http://www.pythonware.com/products/pil/)
 *   [ReportLab](https://pypi.python.org/pypi/reportlab)
-*   [py2exe](http://www.py2exe.org/) (optional, for Windows distribution only)
 
 Now you can fetch the [latest version of the code](https://github.com/FooSoft/mangle/) and run the `mangle.pyw` script
 to execute Mangle.
@@ -92,4 +79,13 @@ make MacOS X releases myself, I am providing the slightly out of date (and unsup
 its place. Linux users should execute the Python scripts with the interpreter and libraries installed on their system.
 
 *  [magnle_win.zip](http://dl.foosoft.net/mangle/mangle_win.zip)
-*  [mangle_osx.zip](http://dl.foosoft.net/mangle/mangle_osx.zip)
+*  [mangle_osx.zip](http://dl.foosoft.net/mangle/mangle_osx.zip) (quite old)
+
+## Screenshots ##
+
+[![Main window](img/main-thumb.png)](img/main.png)
+[![Options dialog](img/options-thumb.png)](img/options.png)
+[![Kindle 1](img/kindle1-thumb.png)](img/kindle1.png)
+[![Kindle 2](img/kindle2-thumb.png)](img/kindle2.png)
+[![Kindle 3](img/kindle3-thumb.png)](img/kindle3.png)
+[![Kindle 4](img/kindle4-thumb.png)](img/kindle4.png)
