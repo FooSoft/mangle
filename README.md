@@ -26,9 +26,9 @@ However... The Kindle's image viewer does have certain shortcomings:
 *   The first image that you view in a Manga (until the Kindle first writes the "bookmark" file) seems to be arbitrary
     even when files are named sequentially.  About half the time it will correctly pick the first file in the batch, at
     other times it will pick out some other image seemingly at random.
-*   Normally for Kindle to find your Manga scans you have to press <kbd>Alt+Z</kbd> on the home screen. I haven't
-    always had luck with it correctly identifying image directories. At other times, after finding an image directory
-    the Kindle will appear to hang while trying to access it (forcing you to return to the home screen).
+*   Normally for Kindle to find your Manga scans you have to press <kbd>Alt</kbd> + <kbd>Z</kbd> on the home screen. I
+    haven't always had luck with it correctly identifying image directories. At other times, after finding an image
+    directory the Kindle will appear to hang while trying to access it (forcing you to return to the home screen).
 *   The Kindle image viewer has no functionality to rotate images. So if there is a horizontally large image (such as
     what often happens with dual-page scans), it can be difficult to make out the text because the image is simply
     scaled to fit (consequently leaving a lot of wasted space at the bottom of the screen).
@@ -50,7 +50,7 @@ thought it was pretty clever at the time.
 3.  Configure the book title and image processing options.
 4.  Create a root-level directory on your Kindle called `pictures` (case sensitive).
 5.  Export your images, selecting the `pictures` directory you just created.
-6.  Enjoy your Manga (if it doesn't show up, press <kbd>Alt+Z</kbd> while on the home menu).
+6.  Enjoy your Manga (if it doesn't show up, press <kbd>Alt</kbd> + <kbd>Z</kbd> while on the home menu).
 
 ## Installation ##
 
@@ -58,8 +58,8 @@ Pre-build binaries are available for the platforms listed below. I don't have th
 so I am providing the old (and unsupported) package built by Rob White instead. Linux users should run Mangle directly
 from source.
 
-*  [magnle_win.zip](//foosoft.net/projects/mangle/dl/mangle_win.zip)
-*  [mangle_osx.zip](//foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
+*  [magnle_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
+*  [mangle_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
 
 To run Mangle from source make sure you have [Python](https://www.python.org/) and the following dependencies installed:
 
@@ -70,15 +70,15 @@ To run Mangle from source make sure you have [Python](https://www.python.org/) a
 
 ## Screenshots ##
 
-[![Main window](img/main-thumb.png)](img/main.png)
-[![Options dialog](img/options-thumb.png)](img/options.png)
+[![Main window](https://foosoft.net/projects/mangle/img/main-thumb.png)](https://foosoft.net/projects/mangle/img/main.png)
+[![Options dialog](https://foosoft.net/projects/mangle/img/options-thumb.png)](https://foosoft.net/projects/mangle/img/options.png)
 
 ## On the Kindle... ##
 
-[![](img/kindle1-thumb.png)](img/kindle1.png)
-[![](img/kindle2-thumb.png)](img/kindle2.png)
-[![](img/kindle3-thumb.png)](img/kindle3.png)
-[![](img/kindle4-thumb.png)](img/kindle4.png)
+[![](https://foosoft.net/projects/mangle/img/kindle1-thumb.png)](https://foosoft.net/projects/mangle/img/kindle1.png)
+[![](https://foosoft.net/projects/mangle/img/kindle2-thumb.png)](https://foosoft.net/projects/mangle/img/kindle2.png)
+[![](https://foosoft.net/projects/mangle/img/kindle3-thumb.png)](https://foosoft.net/projects/mangle/img/kindle3.png)
+[![](https://foosoft.net/projects/mangle/img/kindle4-thumb.png)](https://foosoft.net/projects/mangle/img/kindle4.png)
 
 ## License ##
 
