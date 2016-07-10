@@ -10,13 +10,12 @@ devices written in Python. With this application you can easily:
 
 ## Motivation ##
 
-Many years ago I received an [Amazon Kindle](http://en.wikipedia.org/wiki/Kindle) gift. I immediately began playing
-around with it and reading about certain undocumented features that the Kindle has to offer. After a couple of hours I
-discovered it to be the perfect device for reading [Manga](http://en.wikipedia.org/wiki/Manga) is almost always
-grayscale, and the aspect ratio fits the Kindle's 600x800 pixel screen almost perfectly. Better yet, the Kindle's
-undocumented image viewer actually keeps track of the last image you viewed and thus you are always able to return to
-the page you left off on when you power on your Kindle. The device supports several popular image formats (jpeg, png,
-gif, etc), and is able to dither and downscale images to fit the screen.
+Many years ago I received an Amazon Kindle as a gift. I immediately began playing around with it and reading about
+certain undocumented features that the Kindle has to offer. After a couple of hours I discovered it to be the perfect
+device for reading Manga is almost always grayscale, and the aspect ratio fits the Kindle's 600x800 pixel screen almost
+perfectly. Better yet, the Kindle's undocumented image viewer actually keeps track of the last image you viewed and thus
+you are always able to return to the page you left off on when you power on your Kindle. The device supports several
+popular image formats (jpeg, png, gif, etc), and is able to dither and downscale images to fit the screen.
 
 However... The Kindle's image viewer does have certain shortcomings:
 
@@ -52,6 +51,15 @@ thought it was pretty clever at the time.
 5.  Export your images, selecting the `pictures` directory you just created.
 6.  Enjoy your Manga (if it doesn't show up, press <kbd>Alt</kbd> + <kbd>Z</kbd> while on the home menu).
 
+## Requirements ##
+
+For running from source:
+
+*   [PyQT4](http://www.riverbankcomputing.com/software/pyqt/download)
+*   [Python 2.7](http://www.python.org/download/releases/2.7/)
+*   [Python Imaging Library (PIL)](http://www.pythonware.com/products/pil/)
+*   [ReportLab](https://pypi.python.org/pypi/reportlab)
+
 ## Installation ##
 
 Pre-build binaries are available for the platforms listed below. I don't have the means to make MacOS X releases myself,
@@ -60,13 +68,6 @@ from source.
 
 *  [magnle_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
 *  [mangle_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
-
-To run Mangle from source make sure you have [Python](https://www.python.org/) and the following dependencies installed:
-
-*   [PyQT4](http://www.riverbankcomputing.com/software/pyqt/download)
-*   [Python 2.7](http://www.python.org/download/releases/2.7/)
-*   [Python Imaging Library (PIL)](http://www.pythonware.com/products/pil/)
-*   [ReportLab](https://pypi.python.org/pypi/reportlab)
 
 ## Screenshots ##
 
