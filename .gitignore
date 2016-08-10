@@ -5,6 +5,7 @@ dist
 *.mngl
 *.cbz
 *.bat
+.idea/
 
 *.DS_Store
 .AppleDouble
