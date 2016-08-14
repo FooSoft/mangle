@@ -45,7 +45,7 @@ def natural_key(string_):
 
 
 class Book(object):
-    DefaultDevice       = 'Kindle Paperwhite'
+    DefaultDevice       = 'Kindle Paperwhite 3/Voyage/Oasis'
     DefaultOutputFormat = 'CBZ only'
     DefaultOverwrite    = True
     DefaultImageFlags   = ImageFlags.Orient | ImageFlags.Resize | ImageFlags.Quantize

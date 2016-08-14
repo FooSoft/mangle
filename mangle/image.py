@@ -78,16 +78,17 @@ class KindleData:
 
     Profiles = {
         'Kindle 1': ((600, 800), Palette4),
-        'Kindle 2': ((600, 800), Palette15a),
-        'Kindle 3': ((600, 800), Palette15a),
-        'Kindle 4': ((600, 800), Palette15b),
-        'Kindle 5': ((600, 800), Palette15b),
-        'Kindle DX': ((824, 1200), Palette15a),
-        'Kindle DXG': ((824, 1200), Palette15a),
-        'Kindle Touch': ((600, 800), Palette15a),
-        'Kindle Paperwhite': ((758, 1024), Palette15b), # resolution given in manual, see http://kindle.s3.amazonaws.com/Kindle_Paperwhite_Users_Guide.pdf
-        'Kindle Paperwhite 3': ((1072, 1448), Palette15b),
-        'KoBo Aura H2o': ((1080, 1430), Palette15a), # resolution from http://www.fnac.com/Liseuse-Numerique-Kobo-by-Fnac-Kobo-Aura-H2O-Noir/a7745120/w-4
+        'Kindle 2/3/Touch': ((600, 800), Palette15a),
+        'Kindle 4 & 5': ((600, 800), Palette15b),
+        'Kindle DX/DXG': ((824, 1200), Palette15a),
+        'Kindle Paperwhite 1 & 2': ((758, 1024), Palette15b),
+        'Kindle Paperwhite 3/Voyage/Oasis': ((1072, 1448), Palette15b),
+        'Kobo Mini/Touch': ((600, 800), Palette15b),
+        'Kobo Glo': ((768, 1024), Palette15b),
+        'Kobo Glo HD': ((1072, 1448), Palette15b),
+        'Kobo Aura': ((758, 1024), Palette15b),
+        'Kobo Aura HD': ((1080, 1440), Palette15b),
+        'Kobo Aura H2O': ((1080, 1430), Palette15a),
     }
 
 
