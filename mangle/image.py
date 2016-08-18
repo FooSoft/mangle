@@ -20,16 +20,16 @@ from PIL import Image, ImageDraw, ImageStat, ImageChops
 
 
 class ImageFlags:
-    Orient       = 1 << 0
-    Resize       = 1 << 1
-    Frame        = 1 << 2
-    Quantize     = 1 << 3
-    Stretch      = 1 << 4
-    Split        = 1 << 5         # split right then left
-    SplitRight   = 1 << 6    # split only the right page
-    SplitLeft    = 1 << 7     # split only the left page
-    SplitInverse = 1 << 8  # split left then right page
-    AutoCrop     = 1 << 9  # split left then right page
+    Orient = 1 << 0
+    Resize = 1 << 1
+    Frame = 1 << 2
+    Quantize = 1 << 3
+    Stretch = 1 << 4
+    SplitRightLeft = 1 << 5    # split right then left
+    SplitRight = 1 << 6        # split only the right page
+    SplitLeft = 1 << 7         # split only the left page
+    SplitLeftRight = 1 << 8    # split left then right page
+    AutoCrop = 1 << 9
 
 
 class KindleData:
@@ -103,12 +103,14 @@ def protect_bad_image(func):
             return func(*args, **kwargs)
         except IOError: # Exception from PIL about bad image
             return args[0]
+
     return func_wrapper
     
 
 @protect_bad_image    
 def splitLeft(image):
     widthImg, heightImg = image.size
+
     return image.crop((0, 0, widthImg / 2, heightImg))
 
 
@@ -189,6 +191,7 @@ def autoCropImage(image):
     except TypeError: # bad image, specific to chops
         return image
     image = image.crop((x0, y0, xend, yend))
+
     return image
 
 
@@ -254,29 +257,22 @@ def convertImage(source, target, device, flags):
     # Load image from source path
     image = loadImage(source)
 
-    
-
     # Format according to palette
     image = formatImage(image)
-    # Apply flag transforms
 
-    # Second pass of first split
+    # Apply flag transforms
     if flags & ImageFlags.SplitRight:
         image = splitRight(image)
-    # First pass of first split option
-    if (flags & ImageFlags.Split):
+    if flags & ImageFlags.SplitRightLeft:
         image = splitLeft(image)
-    # First pass of second splitting option
     if flags & ImageFlags.SplitLeft:
         image = splitLeft(image)
-    # second pass of second splitting option
-    if (flags & ImageFlags.SplitInverse):
+    if flags & ImageFlags.SplitLeftRight:
         image = splitRight(image)
 
     # Auto crop the image, but before manage size and co, clean the source so
     if flags & ImageFlags.AutoCrop:
         image = autoCropImage(image)
-
     if flags & ImageFlags.Orient:
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:
@@ -285,9 +281,6 @@ def convertImage(source, target, device, flags):
         image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
-
-
-
     if flags & ImageFlags.Quantize:
         image = quantizeImage(image, palette)
     
