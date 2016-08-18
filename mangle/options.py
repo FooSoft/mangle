@@ -69,9 +69,9 @@ class DialogOptions(QtGui.QDialog):
         if self.checkboxFrame.isChecked():
             imageFlags |= ImageFlags.Frame
         if self.checkboxSplit.isChecked():
-            imageFlags |= ImageFlags.Split
+            imageFlags |= ImageFlags.SplitRightLeft
         if self.checkboxSplitInverse.isChecked():
-            imageFlags |= ImageFlags.SplitInverse
+            imageFlags |= ImageFlags.SplitLeftRight
         if self.checkboxAutoCrop.isChecked():
             imageFlags |= ImageFlags.AutoCrop
 
