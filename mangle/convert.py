@@ -36,6 +36,7 @@ class DialogConvert(QtGui.QProgressDialog):
         self.setWindowTitle('Exporting book...')
         self.setMaximum(len(self.book.images))
         self.setValue(0)
+        self.increment = 0
 
         self.archive = None
         if 'CBZ' in self.book.outputFormat:
@@ -79,7 +80,8 @@ class DialogConvert(QtGui.QProgressDialog):
                 
     def onTimer(self):
         index = self.value()
-        target = os.path.join(self.bookPath, '%05d.png' % index)
+        pages_split = self.increment
+        target = os.path.join(self.bookPath, '%05d.png' % (index + pages_split))
         source = unicode(self.book.images[index])
 
         if index == 0:
@@ -121,30 +123,34 @@ class DialogConvert(QtGui.QProgressDialog):
                 archive = self.archive
                 pdf = self.pdf
 
-                # Maybe the user ask for a split, but the picture is not a large one, so skip
-                # it but only for this picture
-                if (flags & ImageFlags.Split) or (flags & ImageFlags.SplitInverse):
+                # Check if page wide enough to split
+                if (flags & ImageFlags.SplitRightLeft) or (flags & ImageFlags.SplitLeftRight):
                     if not image.isSplitable(source):
                         # remove split flags
-                        splitFlags= [ImageFlags.Split, ImageFlags.SplitInverse, ImageFlags.SplitRight, ImageFlags.SplitLeft]
+                        splitFlags = [ImageFlags.SplitRightLeft, ImageFlags.SplitLeftRight, ImageFlags.SplitRight,
+                                      ImageFlags.SplitLeft]
                         for f in splitFlags:
                             flags &= ~f
 
                 # For right page (if requested in options and need for this image)
-                if (flags & ImageFlags.Split):
-                    # New path based on modified index
-                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
-                    self.convertAndSave(source, target, device, flags ^ ImageFlags.Split | ImageFlags.SplitRight, archive, pdf)
-                    # Change target once again for left page
-                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
+                if flags & ImageFlags.SplitRightLeft:
+                    self.convertAndSave(source, target, device,
+                                        flags ^ ImageFlags.SplitRightLeft | ImageFlags.SplitRight,
+                                        archive, pdf)
+
+                    # Change target for left page
+                    target = os.path.join(self.bookPath, '%05d.png' % (index + pages_split + 1))
+                    self.increment += 1
 
                 # For right page (if requested), but in inverted mode
-                if (flags & ImageFlags.SplitInverse):
-                    # New path based on modified index
-                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 0))
-                    self.convertAndSave(source, target, device, flags ^ ImageFlags.SplitInverse | ImageFlags.SplitLeft, archive, pdf)
-                    # Change target once again for left page
-                    target = os.path.join(self.bookPath, '%05d.png' % (index * 2 + 1))
+                if flags & ImageFlags.SplitLeftRight:
+                    self.convertAndSave(source, target, device,
+                                        flags ^ ImageFlags.SplitLeftRight | ImageFlags.SplitLeft,
+                                        archive, pdf)
+
+                    # Change target for left page
+                    target = os.path.join(self.bookPath, '%05d.png' % (index + pages_split + 1))
+                    self.increment += 1
 
                 # Convert page
                 self.convertAndSave(source, target, device, flags, archive, pdf)

@@ -63,52 +63,57 @@
           </item>
           <item>
            <property name="text">
-            <string>Kindle 2</string>
+            <string>Kindle 2/3/Touch</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle 3</string>
+            <string>Kindle 4 &amp; 5</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle 4</string>
+            <string>Kindle DX/DXG</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle 5</string>
+            <string>Kindle Paperwhite 1 &amp; 2</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle DX</string>
+            <string>Kindle Paperwhite 3/Voyage/Oasis</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle DXG</string>
+            <string>Kobo Mini/Touch</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle Touch</string>
+            <string>Kobo Glo</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle Paperwhite</string>
+            <string>Kobo Glo HD</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Kindle Paperwhite 3</string>
+            <string>Kobo Aura</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>KoBo Aura H2o</string>
+            <string>Kobo Aura HD</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Kobo Aura H2O</string>
            </property>
           </item>
          </widget>
