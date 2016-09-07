@@ -1,3 +1,4 @@
+# Mangle #
 
 Mangle is a cross-platform image converter and optimizer built for reading Manga on the Amazon Kindle and other E-ink
 devices written in Python. With this application you can easily:
