@@ -55,10 +55,10 @@ thought it was pretty clever at the time.
 
 For running from source:
 
-*   [PyQT4](http://www.riverbankcomputing.com/software/pyqt/download)
+*   [PyQt4](https://riverbankcomputing.com/software/pyqt/download)
 *   [Python 2.7](http://www.python.org/download/releases/2.7/)
-*   [Python Imaging Library (PIL)](http://www.pythonware.com/products/pil/)
-*   [ReportLab](https://pypi.python.org/pypi/reportlab)
+*   [Pillow (PIL)](https://pypi.org/project/Pillow/)
+*   [ReportLab](https://pypi.org/project/reportlab/)
 
 ## Installation ##
 
