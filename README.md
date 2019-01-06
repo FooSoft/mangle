@@ -66,8 +66,8 @@ Pre-build binaries are available for the platforms listed below. I don't have th
 so I am providing the old (and unsupported) package built by Rob White instead. Linux users should run Mangle directly
 from source.
 
-*  [mangle_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
-*  [mangle_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
+*  [mangle\_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
+*  [mangle\_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
 
 ## Screenshots ##
 
