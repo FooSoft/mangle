@@ -8,6 +8,18 @@ devices written in Python. With this application you can easily:
 *   Downsample and rotate images for optimal viewing on Kindle, convert to grayscale to save space and improve contrast.
 *   Automatically generate book meta-data so that your Manga is always properly detected and viewable in-order.
 
+### Screenshots ###
+
+[![Main window](https://foosoft.net/projects/mangle/img/main-thumb.png)](https://foosoft.net/projects/mangle/img/main.png)
+[![Options dialog](https://foosoft.net/projects/mangle/img/options-thumb.png)](https://foosoft.net/projects/mangle/img/options.png)
+
+### On the Kindle... ###
+
+[![](https://foosoft.net/projects/mangle/img/kindle1-thumb.png)](https://foosoft.net/projects/mangle/img/kindle1.png)
+[![](https://foosoft.net/projects/mangle/img/kindle2-thumb.png)](https://foosoft.net/projects/mangle/img/kindle2.png)
+[![](https://foosoft.net/projects/mangle/img/kindle3-thumb.png)](https://foosoft.net/projects/mangle/img/kindle3.png)
+[![](https://foosoft.net/projects/mangle/img/kindle4-thumb.png)](https://foosoft.net/projects/mangle/img/kindle4.png)
+
 ## Motivation ##
 
 Many years ago I received an Amazon Kindle as a gift. I immediately began playing around with it and reading about
@@ -51,9 +63,7 @@ thought it was pretty clever at the time.
 5.  Export your images, selecting the `pictures` directory you just created.
 6.  Enjoy your Manga (if it doesn't show up, press <kbd>Alt</kbd> + <kbd>Z</kbd> while on the home menu).
 
-## Requirements ##
-
-For running from source:
+## Dependencies ##
 
 *   [PyQt4](https://riverbankcomputing.com/software/pyqt/download)
 *   [Python 2.7](http://www.python.org/download/releases/2.7/)
@@ -68,15 +78,3 @@ from source.
 
 *  [mangle\_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
 *  [mangle\_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
-
-## Screenshots ##
-
-[![Main window](https://foosoft.net/projects/mangle/img/main-thumb.png)](https://foosoft.net/projects/mangle/img/main.png)
-[![Options dialog](https://foosoft.net/projects/mangle/img/options-thumb.png)](https://foosoft.net/projects/mangle/img/options.png)
-
-## On the Kindle... ##
-
-[![](https://foosoft.net/projects/mangle/img/kindle1-thumb.png)](https://foosoft.net/projects/mangle/img/kindle1.png)
-[![](https://foosoft.net/projects/mangle/img/kindle2-thumb.png)](https://foosoft.net/projects/mangle/img/kindle2.png)
-[![](https://foosoft.net/projects/mangle/img/kindle3-thumb.png)](https://foosoft.net/projects/mangle/img/kindle3.png)
-[![](https://foosoft.net/projects/mangle/img/kindle4-thumb.png)](https://foosoft.net/projects/mangle/img/kindle4.png)
