@@ -16,7 +16,7 @@
 
 import os
 
-from PIL import Image, ImageDraw, ImageStat, ImageChops
+from PIL import Image, ImageDraw, ImageStat, ImageChops, ImageOps
 
 
 class ImageFlags:
@@ -135,9 +135,7 @@ def quantizeImage(image, palette):
 
 @protect_bad_image
 def stretchImage(image, size):
-    widthDev, heightDev = size
-
-    return image.resize((widthDev, heightDev), Image.ANTIALIAS)
+    return ImageOps.fit(image, size, Image.ANTIALIAS)
 
 
 @protect_bad_image

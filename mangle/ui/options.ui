@@ -217,7 +217,7 @@
       <item>
        <widget class="QRadioButton" name="checkboxStretch">
         <property name="text">
-         <string>Stretch images to fill the screen</string>
+         <string>Scale and crop images to fill the screen</string>
         </property>
        </widget>
       </item>
