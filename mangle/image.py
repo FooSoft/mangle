@@ -276,7 +276,7 @@ def convertImage(source, target, device, flags):
     if flags & ImageFlags.Resize:
         image = resizeImage(image, size)
     if flags & ImageFlags.ScaleCrop:
-        image = stretchImage(image, size)
+        image = scaleCropImage(image, size)
     if flags & ImageFlags.Frame:
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
     if flags & ImageFlags.Quantize:
