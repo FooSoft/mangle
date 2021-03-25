@@ -44,7 +44,7 @@ setup(
         'bundle_files': 1,
         'includes': ['sip'],
         'packages': ['reportlab.pdfbase'],
-        'dll_excludes': ['w9xpopen.exe']
+        'dll_excludes': ['MSVCP90.dll', 'w9xpopen.exe']
     }},
     zipfile=None
 )
