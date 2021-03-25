@@ -24,7 +24,7 @@ class ImageFlags:
     Resize = 1 << 1
     Frame = 1 << 2
     Quantize = 1 << 3
-    Stretch = 1 << 4
+    ScaleCrop = 1 << 4
     SplitRightLeft = 1 << 5    # split right then left
     SplitRight = 1 << 6        # split only the right page
     SplitLeft = 1 << 7         # split only the left page
@@ -134,7 +134,7 @@ def quantizeImage(image, palette):
 
 
 @protect_bad_image
-def stretchImage(image, size):
+def scaleCropImage(image, size):
     return ImageOps.fit(image, size, Image.ANTIALIAS)
 
 
@@ -275,7 +275,7 @@ def convertImage(source, target, device, flags):
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:
         image = resizeImage(image, size)
-    if flags & ImageFlags.Stretch:
+    if flags & ImageFlags.ScaleCrop:
         image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
