@@ -43,8 +43,8 @@ setup(
     options={'py2exe': {
         'bundle_files': 1,
         'includes': ['sip'],
-        'packages': ['reportlab.pdfbase'],
-        'dll_excludes': ['w9xpopen.exe']
+        'packages': ['reportlab.pdfbase', 'reportlab.rl_settings'],
+        'dll_excludes': ['MSVCP90.dll', 'w9xpopen.exe']
     }},
     zipfile=None
 )
