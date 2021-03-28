@@ -1,0 +1,4 @@
+Pillow==6.2.2
+py2exe-py2==0.6.9
+PyQt4 @ https://download.lfd.uci.edu/pythonlibs/w4tscw6k/cp27/PyQt4-4.11.4-cp27-cp27m-win32.whl
+reportlab==3.5.59
