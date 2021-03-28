@@ -128,6 +128,15 @@ PyQt4 @ file:///.../mangle/PyQt4-4.11.4-cp27-cp27m-win32.whl
 reportlab==3.5.59
 ```
 
+You can run the GUI via
+
+```
+(venv) > python mangle.pyw
+```
+
+Optionally, you can install all the dependencies globally
+so you can simply click on the `mangle.pyw` file to run it.
+
 #### Optional
 
 To actually build a stand-alone `.exe`, install
