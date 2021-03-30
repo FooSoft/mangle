@@ -2,12 +2,12 @@
 
 For local development / building stand-alone binaries
 
-## Windows
-
 You need Python 
 [2.7 32 bit](https://www.python.org/downloads/release/python-2718/).
-Download the `Windows x86 MSI installer` 
-and be sure to add `python` to `PATH` during installation.
+
+If you are using Windows download the `Windows x86 MSI installer`.
+
+Be sure to add `python` to `PATH` during installation.
 
 You can run `mangle` using 64 bit Python 2.7,
 but won't be able to build a binary with `py2exe`,
@@ -37,7 +37,7 @@ You can run the GUI via
 Optionally, you can install all the dependencies globally
 so you can simply click on the `mangle.pyw` file to run it.
 
-### Optional
+### Optional (Windows)
 
 To actually build a stand-alone `.exe`, install
  
