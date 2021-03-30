@@ -1,17 +1,16 @@
 # Install Instructions
 
-For local development / building stand-alone binaries
+For local development / building stand-alone binaries.
 
-You need Python 
-[2.7 32 bit](https://www.python.org/downloads/release/python-2718/).
+You need [Python 2.7](https://www.python.org/downloads/release/python-2718/).
 
-If you are using Windows download the `Windows x86 MSI installer`.
+If you are using Windows download the 
+`Windows x86 MSI installer`
+because 32 bit Python is needed to create 
+a Windows executable with `py2exe`. 
+The performance increase from 64 bit is negligible.
 
 Be sure to add `python` to `PATH` during installation.
-
-You can run `mangle` using 64 bit Python 2.7,
-but won't be able to build a binary with `py2exe`,
-and any performance difference is negligible.
 
 Install [virtualenv](https://virtualenv.pypa.io/en/stable/) 
 globally, if you don't already have it.
@@ -28,7 +27,7 @@ and install all dependencies in a venv in the mangle directory, e.g.
 (venv) > pip install -r requirements.txt
 ```
 
-You can run the GUI via
+You can run the app via
 
 ```
 (venv) > python mangle.pyw
@@ -37,7 +36,7 @@ You can run the GUI via
 Optionally, you can install all the dependencies globally
 so you can simply click on the `mangle.pyw` file to run it.
 
-### Optional (Windows)
+# Building an Executable (Windows)
 
 To actually build a stand-alone `.exe`, install
  
