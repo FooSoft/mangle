@@ -25,7 +25,7 @@ and install all dependencies in a venv in the mangle directory, e.g.
 ```
 ...\mangle> virtualenv venv
 > venv\Scripts\activate
-(venv) > pip install requirements.txt
+(venv) > pip install -r requirements.txt
 ```
 
 You can run the GUI via
