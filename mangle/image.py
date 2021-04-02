@@ -135,7 +135,9 @@ def quantizeImage(image, palette):
 
 @protect_bad_image
 def scaleCropImage(image, size):
-    return ImageOps.fit(image, size, Image.ANTIALIAS)
+    # crop only from top of images
+    # since dialogue is never near the top of images
+    return ImageOps.fit(image, size, Image.ANTIALIAS, centering=(0.5, 1.0))
 
 
 @protect_bad_image
