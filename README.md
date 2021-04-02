@@ -78,3 +78,5 @@ from source.
 
 *  [mangle\_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
 *  [mangle\_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
+
+Check [INSTALL.md](INSTALL.md) for build instructions.
