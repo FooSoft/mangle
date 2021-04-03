@@ -45,7 +45,7 @@ To actually build a stand-alone `.exe`, install
 A standalone binary can be created in the `dist` folder via
 
 ```
-(venv) > python setup.py install
+(venv) > python setup.py
 ```
 
 You may get an error which can be solved by looking at
