@@ -137,8 +137,14 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# generated manga
 *.mngl
+[0-9][0-9][0-9][0-9][0-9].png
+*.manga
+*.manga_save
 *.cbz
+*.pdf
+
 *.bat
 .idea/
 
