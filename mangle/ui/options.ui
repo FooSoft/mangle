@@ -215,9 +215,23 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="checkboxScaleCrop">
+       <widget class="QRadioButton" name="checkboxFit">
         <property name="text">
-         <string>Scale and crop images to fill the screen</string>
+         <string>Fit to screen with borders</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="checkboxFill">
+        <property name="text">
+         <string>Fill screen by cropping</string>
+        </property>
+       </widget>
+      </item>      
+      <item>
+       <widget class="QRadioButton" name="checkboxStretch">
+        <property name="text">
+         <string>Stretch images to fill screen</string>
         </property>
        </widget>
       </item>

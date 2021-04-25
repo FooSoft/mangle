@@ -43,7 +43,9 @@ class DialogOptions(QtGui.QDialog):
         self.checkboxOverwrite.setChecked(self.book.overwrite)
         self.checkboxOrient.setChecked(self.book.imageFlags & ImageFlags.Orient)
         self.checkboxResize.setChecked(self.book.imageFlags & ImageFlags.Resize)
-        self.checkboxScaleCrop.setChecked(self.book.imageFlags & ImageFlags.ScaleCrop)
+        self.checkboxFit.setChecked(self.book.imageFlags & ImageFlags.Fit)
+        self.checkboxFill.setChecked(self.book.imageFlags & ImageFlags.Fill)
+        self.checkboxStretch.setChecked(self.book.imageFlags & ImageFlags.Stretch)
         self.checkboxQuantize.setChecked(self.book.imageFlags & ImageFlags.Quantize)
         self.checkboxFrame.setChecked(self.book.imageFlags & ImageFlags.Frame)
 
@@ -62,8 +64,12 @@ class DialogOptions(QtGui.QDialog):
             imageFlags |= ImageFlags.Orient
         if self.checkboxResize.isChecked():
             imageFlags |= ImageFlags.Resize
-        if self.checkboxScaleCrop.isChecked():
-            imageFlags |= ImageFlags.ScaleCrop
+        if self.checkboxFit.isChecked():
+            imageFlags |= ImageFlags.Fit
+        if self.checkboxFill.isChecked():
+            imageFlags |= ImageFlags.Fill
+        if self.checkboxStretch.isChecked():
+            imageFlags |= ImageFlags.Stretch
         if self.checkboxQuantize.isChecked():
             imageFlags |= ImageFlags.Quantize
         if self.checkboxFrame.isChecked():

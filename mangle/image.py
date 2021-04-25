@@ -24,12 +24,14 @@ class ImageFlags:
     Resize = 1 << 1
     Frame = 1 << 2
     Quantize = 1 << 3
-    ScaleCrop = 1 << 4
+    Fit = 1 << 4
     SplitRightLeft = 1 << 5    # split right then left
     SplitRight = 1 << 6        # split only the right page
     SplitLeft = 1 << 7         # split only the left page
     SplitLeftRight = 1 << 8    # split left then right page
     AutoCrop = 1 << 9
+    Fill = 1 << 10
+    Stretch = 1 << 11
 
 
 class KindleData:
@@ -134,8 +136,33 @@ def quantizeImage(image, palette):
 
 
 @protect_bad_image
-def scaleCropImage(image, size):
+def fitImage(image, size, method=Image.ANTIALIAS):
+    # copied from ImageOps.contain() from the Python3 version of Pillow
+    # with division related modifications for Python2
+
+    im_ratio = 1.0 * image.width / image.height
+    dest_ratio = 1.0 * size[0] / size[1]
+
+    if im_ratio != dest_ratio:
+        if im_ratio > dest_ratio:
+            new_height = int(1.0 * image.height / image.width * size[0])
+            if new_height != size[1]:
+                size = (size[0], new_height)
+        else:
+            new_width = int(1.0 * image.width / image.height * size[1])
+            if new_width != size[0]:
+                size = (new_width, size[1])
+    return image.resize(size, resample=method)
+
+
+@protect_bad_image
+def fillImage(image, size):
     return ImageOps.fit(image, size, Image.ANTIALIAS)
+
+
+@protect_bad_image
+def stretchImage(image, size):
+    return image.resize(size, Image.ANTIALIAS)
 
 
 @protect_bad_image
@@ -275,8 +302,12 @@ def convertImage(source, target, device, flags):
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:
         image = resizeImage(image, size)
-    if flags & ImageFlags.ScaleCrop:
-        image = scaleCropImage(image, size)
+    if flags & ImageFlags.Fit:
+        image = fitImage(image, size)
+    if flags & ImageFlags.Fill:
+        image = fillImage(image, size)
+    if flags & ImageFlags.Stretch:
+        image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
     if flags & ImageFlags.Quantize:
