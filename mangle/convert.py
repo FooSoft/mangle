@@ -16,21 +16,23 @@
 
 import os
 import shutil
-from PyQt4 import QtGui, QtCore
+
+#from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5.QtCore import *
+
+from .image import ImageFlags
+from . import cbz
+from . import image
+# from . import pdfimage
 
 
-from image import ImageFlags
-import cbz
-import image
-import pdfimage
-
-
-class DialogConvert(QtGui.QProgressDialog):
+class DialogConvert(QtWidgets.QProgressDialog):
     def __init__(self, parent, book, directory):
-        QtGui.QProgressDialog.__init__(self)
+        QtWidgets.QProgressDialog.__init__(self)
 
         self.book     = book
-        self.bookPath = os.path.join(unicode(directory), unicode(self.book.title))
+        self.bookPath = os.path.join(str(directory), str(self.book.title))
 
         self.timer = None
         self.setWindowTitle('Exporting book...')
@@ -82,19 +84,19 @@ class DialogConvert(QtGui.QProgressDialog):
         index = self.value()
         pages_split = self.increment
         target = os.path.join(self.bookPath, '%05d.png' % (index + pages_split))
-        source = unicode(self.book.images[index])
+        source = str(self.book.images[index])
 
         if index == 0:
             try:
                 if not os.path.isdir(self.bookPath):
                     os.makedirs(self.bookPath)
             except OSError:
-                QtGui.QMessageBox.critical(self, 'Mangle', 'Cannot create directory %s' % self.bookPath)
+                QtWidgets.QMessageBox.critical(self, 'Mangle', 'Cannot create directory %s' % self.bookPath)
                 self.close()
                 return
 
             try:
-                base = os.path.join(self.bookPath, unicode(self.book.title))
+                base = os.path.join(self.bookPath, str(self.book.title))
 
                 mangaName = base + '.manga'
                 if self.book.overwrite or not os.path.isfile(mangaName):
@@ -105,12 +107,12 @@ class DialogConvert(QtGui.QProgressDialog):
                 mangaSaveName = base + '.manga_save'
                 if self.book.overwrite or not os.path.isfile(mangaSaveName):
                     mangaSave = open(base + '.manga_save', 'w')
-                    saveData = u'LAST=/mnt/us/pictures/%s/%s' % (self.book.title, os.path.split(target)[1])
-                    mangaSave.write(saveData.encode('utf-8'))
+                    saveData = 'LAST=/mnt/us/pictures/%s/%s' % (self.book.title, os.path.split(target)[1])
+                    mangaSave.write(saveData)
                     mangaSave.close()
 
             except IOError:
-                QtGui.QMessageBox.critical(self, 'Mangle', 'Cannot write manga file(s) to directory %s' % self.bookPath)
+                QtWidgets.QMessageBox.critical(self, 'Mangle', 'Cannot write manga file(s) to directory %s' % self.bookPath)
                 self.close()
                 return False
 
@@ -155,15 +157,15 @@ class DialogConvert(QtGui.QProgressDialog):
                 # Convert page
                 self.convertAndSave(source, target, device, flags, archive, pdf)
 
-        except RuntimeError, error:
-            result = QtGui.QMessageBox.critical(
+        except RuntimeError as error:
+            result = QtWidgets.QMessageBox.critical(
                 self,
                 'Mangle',
                 str(error),
-                QtGui.QMessageBox.Abort | QtGui.QMessageBox.Ignore,
-                QtGui.QMessageBox.Ignore
+                QtWidgets.QMessageBox.Abort | QtWidgets.QMessageBox.Ignore,
+                QtWidgets.QMessageBox.Ignore
             )
-            if result == QtGui.QMessageBox.Abort:
+            if result == QtWidgets.QMessageBox.Abort:
                 self.close()
                 return
 

@@ -15,15 +15,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+## TODO # Port to Python3, PyQt5 # TODO ##
+# X run 2to3
+# X change imports to PyQt5 and update PyQt method calls 
+# X test main functionality:
+#	X build comic with images and generate all formats for at least 2 types of Kindle
+#	X test load/save .mngl files and other menu bar buttons.
+# - remove unused imports
+# - remove print/ debug
+# - test all functions
 
 import sys
 
-from PyQt4 import QtGui
+from PyQt5 import QtGui, QtCore, uic, QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtCore import *
 
 from mangle.book import MainWindowBook
 
-
-application = QtGui.QApplication(sys.argv)
+application = QtWidgets.QApplication(sys.argv)
 filename = sys.argv[1] if len(sys.argv) > 1 else None
 window = MainWindowBook(filename)
 window.show()
