@@ -14,37 +14,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
+# import os.path
 
-from reportlab.pdfgen import canvas
+# from reportlab.pdfgen import canvas
 
-from image import KindleData
-
-
-class PDFImage(object):
-    def __init__(self, path, title, device):
-        outputDirectory = os.path.dirname(path)
-        outputFileName = '%s.pdf' % os.path.basename(path)
-        outputPath = os.path.join(outputDirectory, outputFileName)
-        self.currentDevice = device
-        self.bookTitle = title
-        self.pageSize = KindleData.Profiles[self.currentDevice][0]
-        # pagesize could be letter or A4 for standarization but we need to control some image sizes
-        self.canvas = canvas.Canvas(outputPath, pagesize=self.pageSize)
-        self.canvas.setAuthor("Mangle")
-        self.canvas.setTitle(self.bookTitle)
-        self.canvas.setSubject("Created for " + self.currentDevice)
+# from .image import KindleData
 
 
-    def addImage(self, filename):
-        self.canvas.drawImage(filename, 0, 0, width=self.pageSize[0], height=self.pageSize[1], preserveAspectRatio=True, anchor='c')
-        self.canvas.showPage()
+# class PDFImage(object):
+#     def __init__(self, path, title, device):
+#         outputDirectory = os.path.dirname(path)
+#         outputFileName = '%s.pdf' % os.path.basename(path)
+#         outputPath = os.path.join(outputDirectory, outputFileName)
+#         self.currentDevice = device
+#         self.bookTitle = title
+#         self.pageSize = KindleData.Profiles[self.currentDevice][0]
+#         # pagesize could be letter or A4 for standarization but we need to control some image sizes
+#         self.canvas = canvas.Canvas(outputPath, pagesize=self.pageSize)
+#         self.canvas.setAuthor("Mangle")
+#         self.canvas.setTitle(self.bookTitle)
+#         self.canvas.setSubject("Created for " + self.currentDevice)
 
-    def __enter__(self):
-        return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
+#     def addImage(self, filename):
+#         self.canvas.drawImage(filename, 0, 0, width=self.pageSize[0], height=self.pageSize[1], preserveAspectRatio=True, anchor='c')
+#         self.canvas.showPage()
 
-    def close(self):
-        self.canvas.save()
+#     def __enter__(self):
+#         return self
+
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         self.close()
+
+#     def close(self):
+#         self.canvas.save()

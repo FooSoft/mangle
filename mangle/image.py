@@ -16,7 +16,7 @@
 
 import os
 
-from PIL import Image, ImageDraw, ImageStat, ImageChops, ImageOps
+from PIL import Image, ImageDraw, ImageStat, ImageChops
 
 
 class ImageFlags:
@@ -24,7 +24,7 @@ class ImageFlags:
     Resize = 1 << 1
     Frame = 1 << 2
     Quantize = 1 << 3
-    ScaleCrop = 1 << 4
+    Stretch = 1 << 4
     SplitRightLeft = 1 << 5    # split right then left
     SplitRight = 1 << 6        # split only the right page
     SplitLeft = 1 << 7         # split only the left page
@@ -105,9 +105,9 @@ def protect_bad_image(func):
             return args[0]
 
     return func_wrapper
-    
 
-@protect_bad_image    
+
+@protect_bad_image
 def splitLeft(image):
     widthImg, heightImg = image.size
 
@@ -125,7 +125,7 @@ def splitRight(image):
 def quantizeImage(image, palette):
     colors = len(palette) / 3
     if colors < 256:
-        palette = palette + palette[:3] * (256 - colors)
+        palette = palette + palette[:3] * int(256 - colors)
 
     palImg = Image.new('P', (1, 1))
     palImg.putpalette(palette)
@@ -134,8 +134,10 @@ def quantizeImage(image, palette):
 
 
 @protect_bad_image
-def scaleCropImage(image, size):
-    return ImageOps.fit(image, size, Image.ANTIALIAS)
+def stretchImage(image, size):
+    widthDev, heightDev = size
+
+    return image.resize((widthDev, heightDev), Image.ANTIALIAS)
 
 
 @protect_bad_image
@@ -226,7 +228,7 @@ def loadImage(source):
         return Image.open(source)
     except IOError:
         raise RuntimeError('Cannot read image file %s' % source)
-    
+
 
 def saveImage(image, target):
     try:
@@ -243,7 +245,7 @@ def isSplitable(source):
     try:
         widthImg, heightImg = image.size
         return  widthImg > heightImg
-    except IOError: 
+    except IOError:
         raise RuntimeError('Cannot read image file %s' % source)
 
 
@@ -275,11 +277,11 @@ def convertImage(source, target, device, flags):
         image = orientImage(image, size)
     if flags & ImageFlags.Resize:
         image = resizeImage(image, size)
-    if flags & ImageFlags.ScaleCrop:
-        image = scaleCropImage(image, size)
+    if flags & ImageFlags.Stretch:
+        image = stretchImage(image, size)
     if flags & ImageFlags.Frame:
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
     if flags & ImageFlags.Quantize:
         image = quantizeImage(image, palette)
-    
+
     saveImage(image, target)
