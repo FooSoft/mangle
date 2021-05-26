@@ -14,15 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui, uic
+#from PyQt4 import QtGui, uic
+from PyQt5 import QtGui, uic, QtWidgets
 
-from image import ImageFlags
-import util
+from .image import ImageFlags
+from . import util
 
 
-class DialogOptions(QtGui.QDialog):
+class DialogOptions(QtWidgets.QDialog):
     def __init__(self, parent, book):
-        QtGui.QDialog.__init__(self, parent)
+        QtWidgets.QDialog.__init__(self, parent)
 
         uic.loadUi(util.buildResPath('mangle/ui/options.ui'), self)
         self.accepted.connect(self.onAccept)

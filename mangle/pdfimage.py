@@ -18,7 +18,7 @@ import os.path
 
 from reportlab.pdfgen import canvas
 
-from image import KindleData
+from .image import KindleData
 
 
 class PDFImage(object):
