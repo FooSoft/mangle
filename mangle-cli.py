@@ -5,6 +5,15 @@
     -o book.outputFormat defaults to 'CBZ only'
 
 NOTE order of arguments for image files is significant.
+
+Example:
+
+    mkdir my_comic
+    cd my_comic
+    7z x /full/path/my/comic.cbz
+    cd ..
+    python mangle-cli.py -tmy_comic  my_comic/*
+
 """
 
 import shutil
