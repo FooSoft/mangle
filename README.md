@@ -1,3 +1,12 @@
+<!-- +++
+Area = "projects"
+GitHub = "mangle"
+Layout = "page"
+Tags = ["kindle", "manga", "mangle", "pil", "pyqt", "python", "gpl license"]
+Description = "Manga processor for the Kindle e-book reader."
+Collection = "ProjectsComplete"
++++ -->
+
 # Mangle
 
 Mangle is a cross-platform image converter and optimizer built for reading Manga on the Amazon Kindle and other E-ink
@@ -8,10 +17,10 @@ devices written in Python. With this application you can easily:
 *   Downsample and rotate images for optimal viewing on Kindle, convert to grayscale to save space and improve contrast.
 *   Automatically generate book meta-data so that your Manga is always properly detected and viewable in-order.
 
-[![](https://foosoft.net/projects/mangle/img/kindle1-thumb.png)](https://foosoft.net/projects/mangle/img/kindle1.png)
-[![](https://foosoft.net/projects/mangle/img/kindle2-thumb.png)](https://foosoft.net/projects/mangle/img/kindle2.png)
-[![](https://foosoft.net/projects/mangle/img/kindle3-thumb.png)](https://foosoft.net/projects/mangle/img/kindle3.png)
-[![](https://foosoft.net/projects/mangle/img/kindle4-thumb.png)](https://foosoft.net/projects/mangle/img/kindle4.png)
+[![](img/kindle1-thumb.png)](img/kindle1.png)
+[![](img/kindle2-thumb.png)](img/kindle2.png)
+[![](img/kindle3-thumb.png)](img/kindle3.png)
+[![](img/kindle4-thumb.png)](img/kindle4.png)
 
 ## Motivation
 
@@ -65,9 +74,5 @@ thought it was pretty clever at the time.
 
 ## Installation
 
-Pre-build binaries are available for the platforms listed below. I don't have the means to make MacOS X releases myself,
-so I am providing the old (and unsupported) package built by Rob White instead. Linux users should run Mangle directly
-from source.
-
-*  [Windows](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
-*  [MacOS X](https://foosoft.net/projects/mangle/dl/mangle_osx.zip)
+Pre-built binaries are available for download from the project's [releases
+page](https://github.com/FooSoft/mangle/releases).
