@@ -137,9 +137,12 @@ def quantizeImage(image, palette):
 def scaleCropImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
+    
+    imgRatio = float(widthImg) / float(heightImg)
+    devRatio = float(widthDev) / float(heightDev)
 
     # don't crop 2 page spreads.
-    if (float(widthImg) / float(heightImg)) > (float(widthDev) / float(heightDev)):
+    if imgRatio > devRatio:
         return resizeImage(image, size)
     
     return ImageOps.fit(image, size, Image.ANTIALIAS)
