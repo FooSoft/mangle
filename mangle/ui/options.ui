@@ -217,7 +217,7 @@
       <item>
        <widget class="QRadioButton" name="checkboxScaleCrop">
         <property name="text">
-         <string>Scale and crop images to fill the screen</string>
+         <string>Scale and crop images to fill screen width</string>
         </property>
        </widget>
       </item>

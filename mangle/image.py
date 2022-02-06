@@ -135,6 +135,16 @@ def quantizeImage(image, palette):
 
 @protect_bad_image
 def scaleCropImage(image, size):
+    widthDev, heightDev = size
+    widthImg, heightImg = image.size
+    
+    imgRatio = float(widthImg) / float(heightImg)
+    devRatio = float(widthDev) / float(heightDev)
+
+    # don't crop 2 page spreads.
+    if imgRatio > devRatio:
+        return resizeImage(image, size)
+    
     return ImageOps.fit(image, size, Image.ANTIALIAS)
 
 
