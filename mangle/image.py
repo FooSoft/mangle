@@ -185,6 +185,9 @@ def orientImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
 
+    if widthImg <= widthDev and heightImg <= heightDev:
+        return image
+
     if (widthImg > heightImg) != (widthDev > heightDev):
         return image.rotate(90, Image.BICUBIC, True)
     return image
