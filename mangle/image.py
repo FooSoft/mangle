@@ -105,9 +105,9 @@ def protect_bad_image(func):
             return args[0]
 
     return func_wrapper
-    
 
-@protect_bad_image    
+
+@protect_bad_image
 def splitLeft(image):
     widthImg, heightImg = image.size
 
@@ -125,7 +125,7 @@ def splitRight(image):
 def quantizeImage(image, palette):
     colors = len(palette) / 3
     if colors < 256:
-        palette = palette + palette[:3] * (256 - colors)
+        palette = palette + palette[:3] * int(256 - colors)
 
     palImg = Image.new('P', (1, 1))
     palImg.putpalette(palette)
@@ -239,7 +239,7 @@ def loadImage(source):
         return Image.open(source)
     except IOError:
         raise RuntimeError('Cannot read image file %s' % source)
-    
+
 
 def saveImage(image, target):
     try:
@@ -256,7 +256,7 @@ def isSplitable(source):
     try:
         widthImg, heightImg = image.size
         return  widthImg > heightImg
-    except IOError: 
+    except IOError:
         raise RuntimeError('Cannot read image file %s' % source)
 
 
@@ -294,5 +294,5 @@ def convertImage(source, target, device, flags):
         image = frameImage(image, tuple(palette[:3]), tuple(palette[-3:]), size)
     if flags & ImageFlags.Quantize:
         image = quantizeImage(image, palette)
-    
+
     saveImage(image, target)
