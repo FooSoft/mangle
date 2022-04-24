@@ -157,6 +157,16 @@ def fitImage(image, size, method=Image.ANTIALIAS):
 
 @protect_bad_image
 def fillImage(image, size):
+    widthDev, heightDev = size
+    widthImg, heightImg = image.size
+    
+    imgRatio = float(widthImg) / float(heightImg)
+    devRatio = float(widthDev) / float(heightDev)
+
+    # don't crop 2 page spreads.
+    if imgRatio > devRatio:
+        return resizeImage(image, size)
+    
     return ImageOps.fit(image, size, Image.ANTIALIAS)
 
 
@@ -201,6 +211,9 @@ def formatImage(image):
 def orientImage(image, size):
     widthDev, heightDev = size
     widthImg, heightImg = image.size
+
+    if widthImg <= widthDev and heightImg <= heightDev:
+        return image
 
     if (widthImg > heightImg) != (widthDev > heightDev):
         return image.rotate(90, Image.BICUBIC, True)

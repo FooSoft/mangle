@@ -1,4 +1,13 @@
-# Mangle #
+<!-- +++
+Area = "projects"
+GitHub = "mangle"
+Layout = "page"
+Tags = ["kindle", "manga", "mangle", "pil", "pyqt", "python", "gpl license"]
+Description = "Manga processor for the Kindle e-book reader."
+Collection = "ProjectsComplete"
++++ -->
+
+# Mangle
 
 Mangle is a cross-platform image converter and optimizer built for reading Manga on the Amazon Kindle and other E-ink
 devices written in Python. With this application you can easily:
@@ -8,19 +17,12 @@ devices written in Python. With this application you can easily:
 *   Downsample and rotate images for optimal viewing on Kindle, convert to grayscale to save space and improve contrast.
 *   Automatically generate book meta-data so that your Manga is always properly detected and viewable in-order.
 
-### Screenshots ###
+[![](img/kindle1-thumb.png)](img/kindle1.png)
+[![](img/kindle2-thumb.png)](img/kindle2.png)
+[![](img/kindle3-thumb.png)](img/kindle3.png)
+[![](img/kindle4-thumb.png)](img/kindle4.png)
 
-[![Main window](https://foosoft.net/projects/mangle/img/main-thumb.png)](https://foosoft.net/projects/mangle/img/main.png)
-[![Options dialog](https://foosoft.net/projects/mangle/img/options-thumb.png)](https://foosoft.net/projects/mangle/img/options.png)
-
-### On the Kindle... ###
-
-[![](https://foosoft.net/projects/mangle/img/kindle1-thumb.png)](https://foosoft.net/projects/mangle/img/kindle1.png)
-[![](https://foosoft.net/projects/mangle/img/kindle2-thumb.png)](https://foosoft.net/projects/mangle/img/kindle2.png)
-[![](https://foosoft.net/projects/mangle/img/kindle3-thumb.png)](https://foosoft.net/projects/mangle/img/kindle3.png)
-[![](https://foosoft.net/projects/mangle/img/kindle4-thumb.png)](https://foosoft.net/projects/mangle/img/kindle4.png)
-
-## Motivation ##
+## Motivation
 
 Many years ago I received an Amazon Kindle as a gift. I immediately began playing around with it and reading about
 certain undocumented features that the Kindle has to offer. After a couple of hours I discovered it to be the perfect
@@ -54,7 +56,7 @@ However... The Kindle's image viewer does have certain shortcomings:
 Mangle was born out of my annoyance with these issues. The program name is a portmanteau of "Manga" and "Kindle"; I
 thought it was pretty clever at the time.
 
-## Usage ##
+## Usage
 
 1.  Add the desired images and image directories to the current book.
 2.  Re-order the images as needed (files pre-sorted alphabetically).
@@ -63,20 +65,14 @@ thought it was pretty clever at the time.
 5.  Export your images, selecting the `pictures` directory you just created.
 6.  Enjoy your Manga (if it doesn't show up, press <kbd>Alt</kbd> + <kbd>Z</kbd> while on the home menu).
 
-## Dependencies ##
+## Dependencies
 
 *   [PyQt4](https://riverbankcomputing.com/software/pyqt/download)
 *   [Python 2.7](http://www.python.org/download/releases/2.7/)
 *   [Pillow (PIL)](https://pypi.org/project/Pillow/)
 *   [ReportLab](https://pypi.org/project/reportlab/)
 
-## Installation ##
+## Installation
 
-Pre-build binaries are available for the platforms listed below. I don't have the means to make MacOS X releases myself,
-so I am providing the old (and unsupported) package built by Rob White instead. Linux users should run Mangle directly
-from source.
-
-*  [mangle\_win.zip](https://foosoft.net/projects/mangle/dl/mangle_win.zip)
-*  [mangle\_osx.zip](https://foosoft.net/projects/mangle/dl/mangle_osx.zip) (quite old)
-
-Check [INSTALL.md](INSTALL.md) for build instructions.
+Pre-built binaries are available for download from the project's [releases
+page](https://github.com/FooSoft/mangle/releases).

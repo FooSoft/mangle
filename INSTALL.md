@@ -4,11 +4,11 @@ For local development / building stand-alone binaries.
 
 You need [Python 2.7](https://www.python.org/downloads/release/python-2718/).
 
-If you are using Windows download the 
-`Windows x86 MSI installer`
-because 32 bit Python is needed to create 
-a Windows executable with `py2exe`. 
-The performance increase from 64 bit is negligible.
+If you are using Windows 
+and want to build a stand-alone binary 
+download the `Windows x86 MSI installer`
+because `py2exe` for Python 2 doesn't work with 64 bit.
+Any performance increase from 64 bit is negligible.
 
 Be sure to add `python` to `PATH` during installation.
 
@@ -45,7 +45,7 @@ To actually build a stand-alone `.exe`, install
 A standalone binary can be created in the `dist` folder via
 
 ```
-(venv) > python setup.py install
+(venv) > python setup.py
 ```
 
 You may get an error which can be solved by looking at
