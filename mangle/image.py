@@ -189,7 +189,7 @@ def orientImage(image, size):
         return image
 
     if (widthImg > heightImg) != (widthDev > heightDev):
-        return image.rotate(90, Image.BICUBIC, True)
+        return image.transpose(Image.ROTATE_90)
     return image
 
 
