@@ -1,12 +1,3 @@
-<!-- +++
-Area = "projects"
-GitHub = "mangle"
-Layout = "page"
-Tags = ["kindle", "manga", "mangle", "pil", "pyqt", "python", "gpl license"]
-Description = "Manga processor for the Kindle e-book reader."
-Collection = "ProjectsComplete"
-+++ -->
-
 # Mangle
 
 Mangle is a cross-platform image converter and optimizer built for reading Manga on the Amazon Kindle and other E-ink
